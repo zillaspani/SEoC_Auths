@@ -1,0 +1,35 @@
+
+REGISTER_TO_AUTH From Thing to Auth
+{
+  "MESSAGE_TYPE": 0,
+  "THING_ID": "hostname",
+  "ADDRESS":"ip_address",
+  "PORT":"port",
+  "SEC_REQ": 3
+}
+
+
+REGISTER_RESPONSE From Auth to Thing
+{
+  "MESSAGE_TYPE": 1,
+  "AUTH_ID": "a1",
+  "ADDRESS":"",
+  "PORT": 00000,
+  "NONCE": 3,
+  "ACCEPTED": 0/1,
+  "SESSION_KEY": "session_key"
+  "SUGGESTED_AUTH":{
+    "a2":{
+      "ADDRESS":"ip_address",
+      "PORT": XXXXX
+    }
+  }
+}
+
+CONNECT_TO_AUTH From Thing to Auth
+{
+  "MESSAGE_TYPE": 2,
+  "THING_ID": "hostname",
+  "ADDRESS":"ip_address",
+  "PORT":"port"
+}

@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  a1:
+    container_name: a1
+    hostname: a1
+    network_mode: host
+    ports:
+      - '44400:44400'
+      - '5005:5005'
+    env_file:
+      - ./env/a1.env
+    build: 
+      context: ./a1/
+    volumes:
+      - $PWD/a1/data:/app/data
