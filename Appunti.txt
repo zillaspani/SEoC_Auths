@@ -18,11 +18,11 @@ REGISTER_TO_AUTH From Thing to Auth
   "ADDRESS":"thing_ip_address",
   "PORT":"thing_port",
   "SEC_REQ": {number to specify security requirements}
-  "signature":"[THING_ID | ADDRESS | PORT | SEC_REQ] signed with its private key"
+  "THING_SIGNATURE": "E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]"
 }
 
 Ricevito il messaggio, l'Auth lo decifra con la sua chiave privata ed effettua le seguenti verifiche nel seguente ordine:
--Verifica della signature con la chiave pubblica della Thing.
+-Verifica della THING_SIGNATURE con la chiave pubblica della Thing.
 -Veririfica se essa è in grado di fornire i requisiti di sicurezza richiesti dalla Thing SEC_REQ
 -Verifica se possiede risorse disponibili per gestire la Thing.
 
@@ -91,7 +91,7 @@ AUTH_HELLO From Auth to Thing
 {
   "MESSAGE_TYPE": 3,
   "AUTH_ID": "auth_hostname",
-  "NONCE": 3,
+  "NONCE": {auth_nonce},
 }
 
 All'interno di AUTH_HELLO, vi sarà un nonce, necessario ad evitare attacchi di tipo reply.
@@ -116,29 +116,85 @@ All'interno troveremo, i due nonce, A_NONCE dovrà essere uguale al NONCE scambi
 Inoltre, vi sarà un array WHO, cioè una lista di thing_hostname tramite il quale la thing esprime la volontà di voler ottenere delle chiavi di sessione, 
 per avviare delle comunicazioni con le things specificate.
 Sarà cura dell'Auth, contattare le Auth di competenza a cui appartengono le things specificate in WHO, per generare, concordare e distribuire le chiavi tra le thing. 
-QUI ENTRA IN GIOCO RELAZIONE DI FIDUCIA TRA AUTH (***)
+($$$$$$$) QUI ENTRA IN GIOCO RELAZIONE DI FIDUCIA TRA AUTH ($$$$$$$)
 
 SESSION_KEY_RESPONSE From Auth to Thing
 {
-  "MESSAGE_TYPE": 4,
+  "MESSAGE_TYPE": 5,
   "AUTH_ID": "hostname",
-  "T_NONCE": {thing_nonce_from SESSION_KEY_REQUEST},
-  "A_NONCE": {auth_nonce}
+  "A_NONCE": {auth_nonce},
   "SESSION_KEYS": {
     "thingX_hostname" : "session_key between requesting thing and thing X",
     .
     .
     "thingN_hostname" : "session_key between requesting thing and thing N" 
   },
-  "AUTH_SIGNATURE:"AUTHSignature with session_key between Auth and Thing"
+  QUALCHE FIRMA o MAC?
 }
 
 SESSION_KEY_RESPONSE è la risposta dell'Auth, all'interno del quale vi sono i campi:
 -A_NONCE per reply attack;
--T_NONCE, contente il T_NONCE inviato prima in SESSION_KEY_REQUEST;
--Una lista di coppia <thing_hostname,session_key>  
+-Una lista di coppia <thing_hostname,session_key> , in questa lista vi saranno solo le coppie riguardanti entità per cui,
+è stato possibile negoziare una chiave.
 
 RELAZIONE DI FIDUCIA:
 Supponiamo io sia l'Auth A1 di T1. T1 vuole comunicare con T3, che è di competenza di A3.
 É lecito chiedersi, posso generare una chiave e la invio ad A3 che a sua volta dovrà inviarla ad T3? Se c'è fiducia sicuramente :D
+
+##########################################
+Comunicazioni tra Things
+
+Quando una Thing riceve una chiave di sessione per comunicare un'altra Things, questa può iniziare
+una comunicazione con quest'ultima. Tale comunicazione, a seguito da una challenge-response sarà autenticata e crifrata.
+Ma vediamo nel dettaglio:
+
+COMM_INIT_REQUEST From thing1 to thing2
+{
+  da definire
+}
+
+COMM_INIT_RESPONSE From thing2 to thing1
+
+COMM_INIT_FINAL From thing1 to thing2
+
+COMUNICAZIONEEEEEEEEE LET'S GOOOO
+
+##########################################
+
+Comunicazioni tra Auth
+Le Auth cominicano tra di loro per lo scambio delle chiavi di sessione necessarie alle comunicazioni tra Things.
+In primo luogo, l'Auth 1 viene contattata da una Thing, sia questa Thing 1, che richiede la generazione di una chiave di sessione per comunicare con Thing 2.
+Individuata l'Auth di competenza, sia questa Auth 2, l'Auth 1 calcola il grado di fiducia. Questo può essere definito:
+-Grado di fiducia diretto
+-Grado di fiducia indiretto
+-Grado di fiducia del canale
+- Altre metriche che saranno proprio il core dell'analisi :Da
+
+Se il grado di fiducia è soddisfacente, l'Auth provvede ad inviare due massaggi:
+
+- SESSION_KEY_RESPONSE a Thing1, cifrata con la chiave di sessione tra Auth1 e Auth2, in cui vi sarà la chiave
+di sessione per comunicare con thing2.
+
+AUTH_SESSION_KEYS From Auth1 to Auth 2, cifrata con chiave pubblica di Auth2 
+{
+  "MESSAGE_TYPE": 6,
+  "AUTH_ID": "hostname",
+  "A_NONCE": "{auth_nonce}",
+  "SESSION_KEYS": {
+    "thingX_hostname" : "session_key for comminications between thingX and thing Y"
+  }
+}
+
+Auth 2 a sua volta, aggiorna le chiavi di Thing 2 con un messaggio UPDATE_KEYS
+
+UPDATE_KEYS from Auth2 to Things1
+{
+  "MESSAGE_TYPE": 7,
+  "AUTH_ID": "hostname",
+  "A_NONCE": "{auth_nonce}",
+  "SESSION_KEYS": {
+    "thingX_hostname" : "session_key for comminications between thingX and thing Y"
+  }
+}
+
 
