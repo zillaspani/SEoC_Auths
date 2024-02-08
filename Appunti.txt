@@ -1,35 +1,144 @@
+##########################################
+Registrazione delle Thing
+Ogni Thing deve essere registrata per utilizzare l'infrastruttura software che permetterà autenticazione e registrazione.
+Lo scopo della fase di registrazione sarà quella di generere delle credenziali (una chiave crittografica) tra Auth e Thing.
+Se la Thing è in grado di utilizzare la crittografia asimmetrica a chiave pubblica, Thing e Auth dovranno scambiarsi le rispettive
+chiavi pubbliche e successivamente scambiarsi la chiave simmetrica (SESSION_KEY) per le successive comunicazioni.
+(Da ridefinire)
+Se la Thing, non possiede nessun meccanismo a chiave pubblica, verrà generata una cosiddetta PERMANENT_SESSION_KEY
+Inoltre, durante tale processo verranno scambiate informazioni quali i rispettivi ID, requisiti di sicurezza richiesti ed offerti rispettivamente
+ed eventuali policy di comunicazione.
+
+La Thing che vuole registrasti ad una Auth, invia un messaggio all'Auth REGISTER_TO_AUTH cifrato con la chiave pubblica dell'Auth.
 
 REGISTER_TO_AUTH From Thing to Auth
 {
   "MESSAGE_TYPE": 0,
-  "THING_ID": "hostname",
-  "ADDRESS":"ip_address",
-  "PORT":"port",
-  "SEC_REQ": 3
+  "THING_ID": "thing_hostname",
+  "ADDRESS":"thing_ip_address",
+  "PORT":"thing_port",
+  "SEC_REQ": {number to specify security requirements}
+  "signature":"[THING_ID | ADDRESS | PORT | SEC_REQ] signed with its private key"
 }
 
+Ricevito il messaggio, l'Auth lo decifra con la sua chiave privata ed effettua le seguenti verifiche nel seguente ordine:
+-Verifica della signature con la chiave pubblica della Thing.
+-Veririfica se essa è in grado di fornire i requisiti di sicurezza richiesti dalla Thing SEC_REQ
+-Verifica se possiede risorse disponibili per gestire la Thing.
 
-REGISTER_RESPONSE From Auth to Thing
+Se le verifiche hanno esito positivo, l'Auth invia un messaggio REGISTER_RESPONSE alla thing, cifrato con la chiave pubblica della thing, in
+cui verrà allegata la SESSION_KEY per le comunicazioni successive e un A_NONCE per evitare eventuali reply attack. 
+
+REGISTER_RESPONSE (Esito Positivo) From Auth to Thing
 {
   "MESSAGE_TYPE": 1,
-  "AUTH_ID": "a1",
-  "ADDRESS":"",
-  "PORT": 00000,
-  "NONCE": 3,
-  "ACCEPTED": 0/1,
+  "AUTH_ID": "auth_hostname",
+  "ADDRESS":"auth_ip_address",
+  "PORT": "auth_port",
+  "A_NONCE": {auth_nonce},
+  "ACCEPTED": 1,
   "SESSION_KEY": "session_key"
+}
+
+Se la SECONDA e TERZA veririfica falliscono, l'Auth invia un messaggio REGISTER_RESPONSE alla thing, cifrato con la chiave pubblica della thing, in
+cui vi saranno:
+- A_NONCE per evitare eventuali reply attack. 
+- Una lista di Auth suggerite a cui successivamente la Thing dovrà provare a registrarsi. 
+REGISTER_RESPONSE (Esito Negativo) From Auth to Thing
+{
+  "MESSAGE_TYPE": 1,
+  "AUTH_ID": "auth_hostname",
+  "ADDRESS":"auth_ip_address",
+  "PORT": "auth_port",
+  "A_NONCE": {auth_nonce},
+  "ACCEPTED": 0,
   "SUGGESTED_AUTH":{
-    "a2":{
-      "ADDRESS":"ip_address",
-      "PORT": XXXXX
+    "suggested_auth_hostname":{
+      "ADDRESS":"suggested_auth_ip_address",
+      "PORT": "suggested_auth_ip"
     }
   }
 }
 
+Se la PRIMA verifica fallisce, il tutto viene ignorato senza fornire alcuna risposta.
+
+Se lo scambio di messaggi avviene tra un Auth e una Thing che non possiede nessun meccanismo di sicurezza a chiave pubblica, al posto di questa viene utilizzata
+una cosiddetta "PRELOAD_KEY". Cioè una chiave che è conosciuta in anticipo dalla Thing e dall'Auth. Nella fattispecie:
+-REGISTER_TO_AUTH sarà cifrato con tale PRELOAD_KEY, non possederà nessuna signature, ma bensì una marca temporale.
+-L'Auth effettua solo SECONDA e TERZA verifica. Se queste vanno a buon fine, all'interno di REGISTER_RESPONSE cifrato con la PRELOAD_KEY, troveremo al posto
+della SESSION_KEY una PERMANENT_SESSION_KEY. Se invece, queste non vanno a buon fine, verrà inviata una REGISTER_RESPONSE cifrata con la PRELOAD_KEY contenente una
+lista di Auth a cui tentare la registrazione.
+
+##########################################
+Comunicazioni tra Things e Auths
+
+Processo di autorizzazine delle Things.
+Le Thing autenticane possono cominicare tra di loro tramite una SESSION_KEY ottenuta tramite le rispettive Auth.
+Il precesso di autorizzazine inizia con un messaggio CONNECT_TO_AUTH, cifrato con la chiave
+di sessione tra Auth e thing (SESSION_KEY o PERMANENT_SESSION_KEY)
+inviato da una thing alla propria Auth di competenza.
+
 CONNECT_TO_AUTH From Thing to Auth
 {
   "MESSAGE_TYPE": 2,
-  "THING_ID": "hostname",
-  "ADDRESS":"ip_address",
-  "PORT":"port"
+  "THING_ID": "thing_hostname",
 }
+
+L'auth che riceve il messaggio CONNECT_TO_AUTH, una volta decifrato con la SESSION_KEY appartente alla specifica thing, risponde
+con un ACK, definito di seguito come AUTH_HELLO.
+
+AUTH_HELLO From Auth to Thing
+{
+  "MESSAGE_TYPE": 3,
+  "AUTH_ID": "auth_hostname",
+  "NONCE": 3,
+}
+
+All'interno di AUTH_HELLO, vi sarà un nonce, necessario ad evitare attacchi di tipo reply.
+
+Di seguito, la thing invierà un messaggio SESSION_KEY_REQUEST, formato:
+
+SESSION_KEY_REQUEST From Thing to Auth
+{
+  "MESSAGE_TYPE": 4,
+  "THING_ID": "thing_hostname",
+  "A_NONCE": {auth_nonce_from_AUTH_HELLO_MESSAGE},
+  "T_NONCE": {thing_nonce},
+  "WHO": [
+    0 : "thingX_hostname it wants to communicate with"
+    .
+    .
+    n : "thingX_hostname it wants to communicate with"
+  ]
+}
+
+All'interno troveremo, i due nonce, A_NONCE dovrà essere uguale al NONCE scambiato nel messaggio precedente, mentre T_NONCE è necessario per evitare evenentiali reply attack.
+Inoltre, vi sarà un array WHO, cioè una lista di thing_hostname tramite il quale la thing esprime la volontà di voler ottenere delle chiavi di sessione, 
+per avviare delle comunicazioni con le things specificate.
+Sarà cura dell'Auth, contattare le Auth di competenza a cui appartengono le things specificate in WHO, per generare, concordare e distribuire le chiavi tra le thing. 
+QUI ENTRA IN GIOCO RELAZIONE DI FIDUCIA TRA AUTH (***)
+
+SESSION_KEY_RESPONSE From Auth to Thing
+{
+  "MESSAGE_TYPE": 4,
+  "AUTH_ID": "hostname",
+  "T_NONCE": {thing_nonce_from SESSION_KEY_REQUEST},
+  "A_NONCE": {auth_nonce}
+  "SESSION_KEYS": {
+    "thingX_hostname" : "session_key between requesting thing and thing X",
+    .
+    .
+    "thingN_hostname" : "session_key between requesting thing and thing N" 
+  },
+  "AUTH_SIGNATURE:"AUTHSignature with session_key between Auth and Thing"
+}
+
+SESSION_KEY_RESPONSE è la risposta dell'Auth, all'interno del quale vi sono i campi:
+-A_NONCE per reply attack;
+-T_NONCE, contente il T_NONCE inviato prima in SESSION_KEY_REQUEST;
+-Una lista di coppia <thing_hostname,session_key>  
+
+RELAZIONE DI FIDUCIA:
+Supponiamo io sia l'Auth A1 di T1. T1 vuole comunicare con T3, che è di competenza di A3.
+É lecito chiedersi, posso generare una chiave e la invio ad A3 che a sua volta dovrà inviarla ad T3? Se c'è fiducia sicuramente :D
+
