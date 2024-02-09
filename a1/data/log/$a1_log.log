@@ -1,0 +1,112 @@
+16:54:06,77 root INFO Start Listening
+16:54:06,77 root INFO Waiting
+16:54:14,630 root INFO Waiting2
+16:54:14,631 root INFO Ricevuto il messaggio '{
+  "MESSAGE_TYPE": 0,
+  "THING_ID": "thing_hostname",
+  "ADDRESS":"thing_ip_address",
+  "PORT":"thing_port",
+  "SEC_REQ": 3,
+  "THING_SIGNATURE": "E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]"
+}' da ('192.168.1.100', 54265)
+16:54:14,631 root INFO Waiting
+16:54:16,835 root INFO Waiting2
+16:54:16,835 root INFO Ricevuto il messaggio '{
+  "MESSAGE_TYPE": 0,
+  "THING_ID": "thing_hostname",
+  "ADDRESS":"thing_ip_address",
+  "PORT":"thing_port",
+  "SEC_REQ": 3,
+  "THING_SIGNATURE": "E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]"
+}' da ('192.168.1.100', 57434)
+16:54:16,835 root INFO Waiting
+16:54:18,954 root INFO Waiting2
+16:54:18,954 root INFO Ricevuto il messaggio '{
+  "MESSAGE_TYPE": 0,
+  "THING_ID": "thing_hostname",
+  "ADDRESS":"thing_ip_address",
+  "PORT":"thing_port",
+  "SEC_REQ": 3,
+  "THING_SIGNATURE": "E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]"
+}' da ('192.168.1.100', 49140)
+16:54:18,954 root INFO Waiting
+17:04:13,775 root INFO Start Listening
+17:04:34,449 root INFO Start Listening
+17:04:39,450 root INFO Working
+17:04:44,450 root INFO Working
+17:04:49,451 root INFO Working
+17:04:54,451 root INFO Working
+17:04:59,451 root INFO Working
+17:05:05,723 root INFO Start Listening
+17:05:10,724 root INFO Working
+17:05:15,724 root INFO Working
+17:05:20,724 root INFO Working
+17:05:25,725 root INFO Working
+17:05:30,725 root INFO Working
+17:05:35,725 root INFO Working
+17:05:40,726 root INFO Working
+17:05:45,972 root INFO Start Listening
+17:05:50,972 root INFO Working
+17:05:55,973 root INFO Working
+17:06:00,973 root INFO Working
+17:06:05,973 root INFO Working
+17:06:10,973 root INFO Working
+17:06:15,974 root INFO Working
+17:06:20,974 root INFO Working
+17:06:25,974 root INFO Working
+17:06:30,975 root INFO Working
+17:06:35,975 root INFO Working
+17:06:40,975 root INFO Working
+17:06:45,975 root INFO Working
+17:06:50,976 root INFO Working
+17:06:55,976 root INFO Working
+17:07:00,976 root INFO Working
+17:07:05,977 root INFO Working
+17:07:10,977 root INFO Working
+17:07:17,318 root INFO Start Listening
+17:07:22,319 root INFO Working
+17:07:27,319 root INFO Working
+17:07:32,320 root INFO Working
+17:07:37,957 root INFO Start Listening
+17:07:42,958 root INFO Working
+17:07:48,472 root INFO Start Listening
+17:07:53,472 root INFO Working
+17:07:58,473 root INFO Working
+17:08:03,473 root INFO Working
+17:08:08,786 root INFO Start Listening
+17:08:08,787 root INFO Waiting
+17:08:13,787 root INFO Working
+17:08:18,787 root INFO Working
+17:08:22,907 root INFO Ricevuto il messaggio '{
+  "MESSAGE_TYPE": 0,
+  "THING_ID": "thing_hostname",
+  "ADDRESS":"thing_ip_address",
+  "PORT":"thing_port",
+  "SEC_REQ": 3,
+  "THING_SIGNATURE": "E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]"
+}' da ('192.168.1.100', 53376)
+17:08:22,907 root INFO Waiting2
+17:08:22,907 root INFO Waiting
+17:08:23,787 root INFO Working
+17:08:25,630 root INFO Ricevuto il messaggio '{
+  "MESSAGE_TYPE": 0,
+  "THING_ID": "thing_hostname",
+  "ADDRESS":"thing_ip_address",
+  "PORT":"thing_port",
+  "SEC_REQ": 3,
+  "THING_SIGNATURE": "E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]"
+}' da ('192.168.1.100', 53654)
+17:08:25,630 root INFO Waiting2
+17:08:25,630 root INFO Waiting
+17:08:28,788 root INFO Working
+17:08:33,788 root INFO Working
+17:08:38,788 root INFO Working
+17:08:43,789 root INFO Working
+17:08:48,789 root INFO Working
+17:08:53,789 root INFO Working
+17:08:58,789 root INFO Working
+17:09:03,790 root INFO Working
+17:09:08,790 root INFO Working
+17:09:13,790 root INFO Working
+17:09:18,790 root INFO Working
+17:09:23,791 root INFO Working

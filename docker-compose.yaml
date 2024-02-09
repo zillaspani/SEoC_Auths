@@ -1,13 +1,12 @@
-version: '3.7'
+version: '3'
 
 services:
   a1:
     container_name: a1
     hostname: a1
-    network_mode: host
-    ports:
-      - '44400:44400'
-      - '5005:5005'
+    network_mode: "host"
+#    ports:
+#      - '5005:5005'
     env_file:
       - ./env/a1.env
     build: 
