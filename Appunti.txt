@@ -112,7 +112,7 @@ AUTH_HELLO From Auth to Thing
 {
   "MESSAGE_TYPE": 3,
   "AUTH_ID": "auth_hostname",
-  "NONCE": {auth_nonce},
+  "A_NONCE": {auth_nonce}
 }
 
 All'interno di AUTH_HELLO, vi sarà un nonce, necessario ad evitare attacchi di tipo reply.
@@ -126,10 +126,10 @@ SESSION_KEY_REQUEST From Thing to Auth
   "A_NONCE": {auth_nonce_from_AUTH_HELLO_MESSAGE},
   "T_NONCE": {thing_nonce},
   "WHO": [
-    0 : "thingX_hostname it wants to communicate with"
+    "thingX_hostname it wants to communicate with",
     .
     .
-    n : "thingN_hostname it wants to communicate with"
+    "thingN_hostname it wants to communicate with"
   ]
 }
 

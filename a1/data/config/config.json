@@ -1,24 +1,28 @@
 {
     "registered_entity_table": {
-      "e1":{
-        "address":"ip address",
-        "port":"port",
-        "sec_req": 0
+      "t1":{
+        "ADDRESS": "192.168.1.100",
+        "PORT": 6666,
+        "SEC_REQ": 3,
+        "SESSION_KEY":"S_K_a1_t1"
       },
-      "e2":{
-        "address":"ip address",
-        "port":"port",
-        "sec_req": 0
+      "t2":{
+        "ADDRESS": "192.168.1.100",
+        "PORT": 6666,
+        "SEC_REQ": 3,
+        "SESSION_KEY":"S_K_a1_t2"
       }
     },
     "COMMUNICATION_POLICY_TABLE":{},
     "CACHED_SESSION_KEY_TABLE":{},
     "trusted_auth_table":{
       "a2":{
-        "address":"ip address",
-        "port":"port",
-        "trustness": 0,
-        "sec_lev": 0
+        "ADDRESS":"a2_ip_address",
+        "PORT":"a2_port"
+      },
+      "a3":{
+        "ADDRESS":"a3_ip_address",
+        "PORT":"a3_port"
       }
     }
-  }
+}
