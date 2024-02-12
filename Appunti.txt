@@ -192,27 +192,30 @@ Individuata l'Auth di competenza, sia questa Auth 2, l'Auth 1 calcola il grado d
 
 Se il grado di fiducia è soddisfacente, l'Auth provvede ad inviare due massaggi:
 
-- SESSION_KEY_RESPONSE a Thing1, cifrata con la chiave di sessione tra Auth1 e Auth2, in cui vi sarà la chiave
+- SESSION_KEY_RESPONSE a Thing1, cifrata con la chiave di sessione tra Auth e thing, in cui vi sarà la chiave
 di sessione per comunicare con thing2.
 
+RIVEDIIIII
 AUTH_SESSION_KEYS From Auth1 to Auth 2, cifrata con chiave pubblica di Auth2 
 {
   "MESSAGE_TYPE": 6,
   "AUTH_ID": "hostname",
   "A_NONCE": "{auth_nonce}",
-  "SESSION_KEYS": {
-    "thingX_hostname" : "session_key for comminications between thingX and thing Y"
+  "SESSION_KEY": {  
+    "receiver_thing":{
+      "sender_thing": "key"
+    }
   }
 }
 
-Auth 2 a sua volta, aggiorna le chiavi di Thing 2 con un messaggio UPDATE_KEYS
+Auth 2 a sua volta, aggiorna le chiavi di Thing 2 con un messaggio UPDATE_KEYS:'1
 
 UPDATE_KEYS from Auth2 to Things1
 {
   "MESSAGE_TYPE": 7,
   "AUTH_ID": "hostname",
   "A_NONCE": "{auth_nonce}",
-  "SESSION_KEYS": {
+  "SESSION_KEY": {
     "thingX_hostname" : "session_key for comminications between thingX and thing Y"
   }
 }

@@ -1,135 +1,21 @@
-17:00:32,181 root INFO Config file:
-{'registered_entity_table': {'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}}, 'COMMUNICATION_POLICY_TABLE': {}, 'CACHED_SESSION_KEY_TABLE': {}, 'trusted_auth_table': {'a2': {'ADDRESS': 'a2_ip_address', 'PORT': 'a2_port'}, 'a3': {'ADDRESS': 'a3_ip_address', 'PORT': 'a3_port'}}}
-17:00:32,181 root INFO Available resources: 6/12
+17:49:50,68 root INFO Config file:
+{'registered_entity_table': {'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}}, 'COMMUNICATION_POLICY_TABLE': {}, 'CACHED_SESSION_KEY_TABLE': {}, 'trusted_auth_table': {'a2': {'ADDRESS': '192.168.1.100', 'PORT': '6667'}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': '6668'}}, 'trusted_auth_things': {'a2': ['t6', 't9'], 'a3': ['t8', 't10']}}
+17:49:50,68 root INFO Available resources: 6/12
 registered_entity_table:
-{'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}} 
-17:00:32,181 root INFO a1 Start Listening on 192.168.1.100:5005
-17:00:37,181 root INFO Working
-17:00:42,182 root INFO Working
-17:00:47,182 root INFO Working
-17:00:50,13 root INFO Message:
+{'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}} 
+17:49:50,68 root INFO a1 Start Listening on 192.168.1.100:5005
+17:49:53,389 root INFO Message:
 '{
-  "MESSAGE_TYPE": 4,
-  "THING_ID": "t1",
-  "A_NONCE": "{auth_nonce_from_AUTH_HELLO_MESSAGE}",
-  "T_NONCE": "{thing_nonce}",
-  "WHO": [
-    "t6",
-    "t8"
-  ]
+  "MESSAGE_TYPE": 6,
+  "AUTH_ID": "a2",
+  "A_NONCE": "b'\\xa8\\xdc\\xach\\xc2\\xb7\\x1ecM\\xf4'",
+  "SESSION_KEY": {
+    "t1": {
+      "t6": "S_K_t6_t1"
+    }
+  }
 }'
- From: ('192.168.1.100', 55714)
-17:00:50,13 root ERROR Auth.evaluate_auth_trustness() takes 1 positional argument but 2 were given
-17:00:50,14 root ERROR Error during template handling, with ('192.168.1.100', 55714)
-17:00:50,14 root DEBUG PINO
-17:00:50,14 root INFO Try to send:
-{'MESSAGE_TYPE': 5, 'AUTH_ID': 'a1', 'A_NONCE': "b'^s`\\xc1q\\xa2\\x1c\\x98\\xc3\\xf2'", 'SESSION_KEY': None}
- to 192.168.1.100:6666
-17:00:50,14 root INFO Sent:
-{'MESSAGE_TYPE': 5, 'AUTH_ID': 'a1', 'A_NONCE': "b'^s`\\xc1q\\xa2\\x1c\\x98\\xc3\\xf2'", 'SESSION_KEY': None}
- to 192.168.1.100:6666
-17:00:52,182 root INFO Working
-17:00:57,183 root INFO Working
-17:01:02,183 root INFO Working
-17:01:07,183 root INFO Working
-17:01:12,183 root INFO Working
-17:01:17,184 root INFO Working
-17:01:22,184 root INFO Working
-17:01:27,184 root INFO Working
-17:01:32,185 root INFO Working
-17:01:34,815 root INFO Config file:
-{'registered_entity_table': {'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}}, 'COMMUNICATION_POLICY_TABLE': {}, 'CACHED_SESSION_KEY_TABLE': {}, 'trusted_auth_table': {'a2': {'ADDRESS': 'a2_ip_address', 'PORT': 'a2_port'}, 'a3': {'ADDRESS': 'a3_ip_address', 'PORT': 'a3_port'}}}
-17:01:34,815 root INFO Available resources: 6/12
-registered_entity_table:
-{'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}} 
-17:01:34,815 root INFO a1 Start Listening on 192.168.1.100:5005
-17:01:39,816 root INFO Working
-17:01:44,816 root INFO Working
-17:01:45,429 root INFO Message:
-'{
-  "MESSAGE_TYPE": 4,
-  "THING_ID": "t1",
-  "A_NONCE": "{auth_nonce_from_AUTH_HELLO_MESSAGE}",
-  "T_NONCE": "{thing_nonce}",
-  "WHO": [
-    "t6",
-    "t8"
-  ]
-}'
- From: ('192.168.1.100', 35618)
-17:01:45,429 root DEBUG PINO
-17:01:45,429 root INFO Try to send:
-{'MESSAGE_TYPE': 5, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\r\\xbcU\\xb2\\x8a)S4\\xfev'", 'SESSION_KEY': {'t6': 'S_K_t1_t6', 't8': 'S_K_t1_t8'}}
- to 192.168.1.100:6666
-17:01:45,429 root INFO Sent:
-{'MESSAGE_TYPE': 5, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\r\\xbcU\\xb2\\x8a)S4\\xfev'", 'SESSION_KEY': {'t6': 'S_K_t1_t6', 't8': 'S_K_t1_t8'}}
- to 192.168.1.100:6666
-17:01:49,816 root INFO Working
-17:01:54,817 root INFO Working
-17:01:59,817 root INFO Working
-17:02:04,817 root INFO Working
-17:02:09,818 root INFO Working
-17:02:14,818 root INFO Working
-17:02:19,818 root INFO Working
-17:02:24,819 root INFO Working
-17:02:29,819 root INFO Working
-17:02:34,819 root INFO Working
-17:02:39,820 root INFO Working
-17:02:44,820 root INFO Working
-17:02:49,820 root INFO Working
-17:02:54,821 root INFO Working
-17:02:59,821 root INFO Working
-17:03:04,821 root INFO Working
-17:03:09,821 root INFO Working
-17:03:14,822 root INFO Working
-17:03:19,822 root INFO Working
-17:03:24,823 root INFO Working
-17:03:29,823 root INFO Working
-17:03:34,823 root INFO Working
-17:03:39,823 root INFO Working
-17:03:44,824 root INFO Working
-17:03:49,824 root INFO Working
-17:03:54,824 root INFO Working
-17:03:59,825 root INFO Working
-17:04:04,825 root INFO Working
-17:04:09,825 root INFO Working
-17:04:14,826 root INFO Working
-17:04:19,826 root INFO Working
-17:04:24,826 root INFO Working
-17:04:29,827 root INFO Working
-17:04:34,827 root INFO Working
-17:04:39,827 root INFO Working
-17:04:44,828 root INFO Working
-17:04:49,828 root INFO Working
-17:04:54,828 root INFO Working
-17:04:59,829 root INFO Working
-17:05:04,829 root INFO Working
-17:05:09,829 root INFO Working
-17:05:14,829 root INFO Working
-17:05:19,830 root INFO Working
-17:05:24,830 root INFO Working
-17:05:29,830 root INFO Working
-17:05:34,831 root INFO Working
-17:05:39,831 root INFO Working
-17:05:44,831 root INFO Working
-17:05:49,832 root INFO Working
-17:05:54,832 root INFO Working
-17:05:59,832 root INFO Working
-17:06:04,833 root INFO Working
-17:06:09,833 root INFO Working
-17:06:14,833 root INFO Working
-17:06:19,833 root INFO Working
-17:06:24,834 root INFO Working
-17:06:29,834 root INFO Working
-17:06:34,834 root INFO Working
-17:06:39,835 root INFO Working
-17:06:44,835 root INFO Working
-17:06:49,835 root INFO Working
-17:06:54,836 root INFO Working
-17:06:59,836 root INFO Working
-17:07:04,836 root INFO Working
-17:07:09,837 root INFO Working
-17:07:14,837 root INFO Working
-17:07:19,837 root INFO Working
-17:07:24,837 root INFO Working
-17:07:29,838 root INFO Working
+ From: ('192.168.1.100', 49322)
+17:49:53,389 root INFO PINO t1+t6+S_K_t6_t1
+17:49:55,69 root INFO Working
+17:50:00,69 root INFO Working

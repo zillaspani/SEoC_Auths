@@ -9,6 +9,7 @@ class Auth:
 
     registered_entity_table={}
     trusted_auth_table={}
+    trusted_auth_things={}
 
     def __init__(self, ip, port):
         logging.basicConfig(
@@ -34,6 +35,7 @@ class Auth:
             self.registered_entity_table=data['registered_entity_table']
             self.avaliable_resource_align()
             self.trusted_auth_table=data['trusted_auth_table']
+            self.trusted_auth_things=data['trusted_auth_things']
             #logging.info(self.registered_entity_table)
         except FileNotFoundError:
             logging.error("Config file not found.")
@@ -154,7 +156,6 @@ class Auth:
         '''
         return False
 
-
     def register_to_auth(self,message, address):
         try:
             if self.check_if_registered(message,address):
@@ -219,25 +220,82 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during template handling, with {address}")
 
+    def get_auth_address(self,auth):
+        try:
+            return self.trusted_auth_table[auth]
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during get_auth_address for {auth}")
+
+    def get_auth(self,thing):
+        for auth in self.trusted_auth_things:
+            if thing in self.trusted_auth_things[auth]:
+                return auth
+
+    def send_auth_session_key(self,session_keys,sender_thing):
+        try:
+            for thing,key in dict(session_keys).items():
+                auth=self.get_auth(thing)
+                address_port=self.get_auth_address(auth)
+                message={
+                    "MESSAGE_TYPE": 6,
+                    "AUTH_ID": self.hostname,
+                    "A_NONCE": str(os.urandom(10)),
+                }
+                message['SESSION_KEY']={thing:{sender_thing:key}}
+
+                self.send(address_port['ADDRESS'],int(address_port['PORT']),message)
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during send_auth_session_key handling requested by {thing}")
+        
     def session_key_request(self,message,address):
         try:
             if not self.check_nonce(message,address):
                 pass
-            response={
+            session_key_response={
                 "MESSAGE_TYPE": 5,
                 "AUTH_ID": self.hostname,
                 "A_NONCE": str(os.urandom(10))
             }
-            response['SESSION_KEY']=self.get_session_key(message,address)
-            logging.debug("PINO")
 
-            self.send(address[0],6666,response)
+            session_keys=self.get_session_key(message,address)
+            
+            session_key_response['SESSION_KEY']=session_keys
+
+            self.send_auth_session_key(session_keys,message['THING_ID'])
+
+            self.send(address[0],6666,session_key_response)
             #self.send(address[0],address[1],response)
 
 
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during session_key_request handling, with {address}")
+
+    def update_key(self,message,address):
+        try:
+            session_key=message['SESSION_KEY']
+            response={
+                        "MESSAGE_TYPE": 7,
+                        "AUTH_ID": self.hostname,
+                        "A_NONCE": str(os.urandom(10))
+                    }
+            for my_thing in session_key:
+                address_
+                sender_thing_record=session_key[my_thing]
+                for sender in sender_thing_record:
+                    key=sender_thing_record[sender]
+                    response['SESSION_KEY']={sender:key}
+                    
+                    
+                
+
+                    logging.info(f"PINO {my_thing}+{sender}+{key}")
+
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during update_key handling, with {address}")
 
     def handle_client(self, data, address):
         logging.info(f"Message:\n'{data.decode()}'\n From: {address}")
@@ -248,9 +306,10 @@ class Auth:
             self.auth_hello(plain_message,address)
         elif plain_message['MESSAGE_TYPE'] == 4:
             self.session_key_request(plain_message,address)
+        elif plain_message['MESSAGE_TYPE'] == 6:
+            self.update_key(plain_message,address)
         else:
             logging.error("Message type was not recognized")
-
 
     def send(self,receiver_ip,receiver_port,message):
         try:
@@ -266,7 +325,6 @@ class Auth:
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during send, with {receiver_ip}:{receiver_port}")
-
 
     def listenT(self):
         while True:
