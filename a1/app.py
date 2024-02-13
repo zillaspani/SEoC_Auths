@@ -126,9 +126,28 @@ class Auth:
                 
             self.send(address[0],6666,response)
             #self.send(address[0],address[1],response)
+            if accepted == 1:
+                self.auth_update()
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during register_response handling, with {address}")  
+    
+    def auth_update(self):
+        message={
+            "MESSAGE_TYPE": 8,
+            "AUTH_ID": self.hostname,
+            "A_NONCE": str(os.urandom(10))
+        }
+        for t in self.registered_entity_table.keys():
+            if 'UPDATE' in message:
+                message['UPDATE'].update({t})
+            else:
+                message['UPDATE']={t}
+        
+        for auth in self.trusted_auth_table.values():
+            self.send(auth['ADDRESS'],auth['PORT'],message)
+
+
 
     def gen_key(self,par1,par2):
         return f"S_K_{par1}_{par2}"
@@ -232,22 +251,42 @@ class Auth:
             if thing in self.trusted_auth_things[auth]:
                 return auth
 
+    def make_dict_auth_things(self,session_keys):
+        '''
+        Given a dict of pair <thing,session_key> it will produce a dict group by auth with the rispective set of records
+        Example:
+        Input: session_keys={'t6': 'S_K_t1_t6', 't8': 'S_K_t1_t8', 't9': 'S_K_t1_t9'}
+        Output: d_auth={'a2': {'t6': 'S_K_t6', 't9': 'S_K_t9'}, 'a3': {'t8': 'S_K_t8'}}
+        '''
+        d_auth={}
+        for s in session_keys.keys():
+            auth=self.get_auth(s)
+            thing=s
+            s_key=session_keys[s]
+            record={thing:s_key}
+            if auth in d_auth:
+                d_auth[auth].update(record)
+            else:
+                d_auth[auth]=record
+        return d_auth
+
+
     def send_auth_session_key(self,session_keys,sender_thing):
         try:
-            for thing,key in dict(session_keys).items():
-                auth=self.get_auth(thing)
-                address_port=self.get_auth_address(auth)
+            d_auth=self.make_dict_auth_things(session_keys)
+            for auth in d_auth.keys():
+                auth_address=self.get_auth_address(auth)
                 message={
                     "MESSAGE_TYPE": 6,
                     "AUTH_ID": self.hostname,
                     "A_NONCE": str(os.urandom(10)),
+                    "FROM": sender_thing
                 }
-                message['SESSION_KEY']={thing:{sender_thing:key}}
-
-                self.send(address_port['ADDRESS'],int(address_port['PORT']),message)
+                message['SESSION_KEYS']=d_auth[auth]
+                self.send(auth_address['ADDRESS'],int(auth_address['PORT']),message)
         except Exception as ex:
             logging.error(ex)
-            logging.error(f"Error during send_auth_session_key handling requested by {thing}")
+            logging.error(f"Error during send_auth_session_key handling requested by {sender_thing}")
         
     def session_key_request(self,message,address):
         try:
@@ -273,29 +312,32 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during session_key_request handling, with {address}")
 
-    def update_key(self,message,address):
+    
+    def auth_session_keys(self,message,address):
         try:
-            session_key=message['SESSION_KEY']
-            response={
-                        "MESSAGE_TYPE": 7,
-                        "AUTH_ID": self.hostname,
-                        "A_NONCE": str(os.urandom(10))
+            session_keys=message['SESSION_KEYS']
+            for t in dict(session_keys).keys():
+                thing_address=self.get_thing_address(t)
+                logging.info(thing_address)
+                response={
+                    "MESSAGE_TYPE": 7,
+                    "AUTH_ID": self.hostname,
+                    "A_NONCE": str(os.urandom(10))
                     }
-            for my_thing in session_key:
-                address_
-                sender_thing_record=session_key[my_thing]
-                for sender in sender_thing_record:
-                    key=sender_thing_record[sender]
-                    response['SESSION_KEY']={sender:key}
-                    
-                    
-                
+                response['SESSION_KEY']={message['FROM']:session_keys[t]}
+                self.send(thing_address['ADDRESS'],thing_address['PORT'],response)
 
-                    logging.info(f"PINO {my_thing}+{sender}+{key}")
 
         except Exception as ex:
             logging.error(ex)
-            logging.error(f"Error during update_key handling, with {address}")
+            logging.error(f"Error during auth_session_keys handling, with {address}")
+
+    def get_thing_address(self,thing):
+        try:
+            return self.registered_entity_table[thing]
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during get_auth_address for {thing}")
 
     def handle_client(self, data, address):
         logging.info(f"Message:\n'{data.decode()}'\n From: {address}")
@@ -307,7 +349,7 @@ class Auth:
         elif plain_message['MESSAGE_TYPE'] == 4:
             self.session_key_request(plain_message,address)
         elif plain_message['MESSAGE_TYPE'] == 6:
-            self.update_key(plain_message,address)
+            self.auth_session_keys(plain_message,address)
         else:
             logging.error("Message type was not recognized")
 
@@ -352,9 +394,6 @@ if __name__ == "__main__":
     auth.start_listening()    
 
     while True:
-        time.sleep(5)
+        time.sleep(30)
         logging.info("Working")
-
-
-
 
