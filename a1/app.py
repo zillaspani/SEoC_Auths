@@ -23,7 +23,6 @@ class Auth:
         self.socket.bind((self.ip, self.port))
         self.hostname=socket.gethostname()
 
-
     def load_init_config(self):
         try:
             with open('data/config/config.json', 'r') as json_file:
@@ -131,13 +130,12 @@ class Auth:
             if accepted == 0: #Register request was declined
                 response['SUGGESTED_AUTH']=self.trusted_auth_table
             else:
-                session_key=self.add_thing(message,address)
+                session_key=self.add_thing(message)
                 logging.info("Nuova thing aggiunta")
                 response['SESSION_KEY']=session_key
 
-                
-            #self.send(address[0],6666,response) #ONLY FOR LOCAL TESTING
-            self.send(address[0],address[1],response)
+            address=self.get_thing_address(message['THING_ID'])
+            self.send(address['ADDRESS'],address['PORT'],response)
             if accepted == 1:
                 self.auth_update()
         except Exception as ex:
@@ -148,23 +146,23 @@ class Auth:
         """
         After that a Thing become registerd to an Auth, the latter have to notice this to its trusted Auths.
         """
-        thing_list=[]
-        for t in self.registered_entity_table.keys():
-            thing_list.append(t)
-                
-        for auth in self.trusted_auth_table.values():
-            message={
-            "MESSAGE_TYPE": 8,
-            "AUTH_ID": self.hostname,
-            "A_NONCE": str(os.urandom(10)),
-            "UPDATE": thing_list
-            }
-            
-            #logging.info(message)
-            #logging.info(f"self.send({auth['ADDRESS']},{auth['PORT']},message)")
-            self.send(auth['ADDRESS'],int(auth['PORT']),message)
-
-
+        try:
+            thing_list=[]
+            for t in self.registered_entity_table.keys():
+                thing_list.append(t)
+                    
+            for auth in self.trusted_auth_table.values():
+                message={
+                "MESSAGE_TYPE": 8,
+                "AUTH_ID": self.hostname,
+                "A_NONCE": str(os.urandom(10)),
+                "UPDATE": thing_list
+                }
+                self.send(auth['ADDRESS'],int(auth['PORT']),message)
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during auth_update handling")
+        
 
     def gen_key(self,par1,par2):
         '''
@@ -172,12 +170,12 @@ class Auth:
         '''
         return f"S_K_{par1}_{par2}"
     
-    def add_thing(self,message,address):
+    def add_thing(self,message):
         try:
             session_key=self.gen_key(self.hostname,message['THING_ID'])
             new_thing={
-                "ADDRESS": address[0],
-                "PORT": address[1],
+                "ADDRESS": message['ADDRESS'],
+                "PORT": message['PORT'],
                 "SEC_REQ": 3,
                 "SESSION_KEY": session_key
             }
@@ -186,7 +184,7 @@ class Auth:
             return session_key
         except Exception as ex:
             logging.error(ex)
-            logging.error(f"Error during add_thing handling, with {address}")
+            logging.error(f"Error during add_thing handling, with {message['ADDRESS']}:{message['PORT']}")
 
     def check_if_registered(self,message,address):
         '''
@@ -290,7 +288,6 @@ class Auth:
                 d_auth[auth]=record
         return d_auth
 
-
     def send_auth_session_key(self,session_keys,sender_thing):
         try:
             d_auth=self.make_dict_auth_things(session_keys)
@@ -332,7 +329,6 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during session_key_request handling, with {address}")
 
-    
     def auth_session_keys(self,message,address):
         try:
             session_keys=message['SESSION_KEYS']
@@ -406,7 +402,6 @@ class Auth:
             data, address = self.socket.recvfrom(1024)
             self.handle_client(data,address)
             
-
     def start_listening(self):
         logging.info(f"{self.hostname} Start Listening on {self.ip}:{self.port}")
         listening_thread = threading.Thread(target=self.listenT, daemon= True)

@@ -1,21 +1,30 @@
-11:18,359 root INFO Config file:
-{'HOSTNAME': 'a1', 'IP': '192.168.1.100', 'UDP_PORT': 5005, 'SEC_LEV': 3, 'RESOURCE': 12, 'registered_entity_table': {'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}}, 'COMMUNICATION_POLICY_TABLE': {}, 'CACHED_SESSION_KEY_TABLE': {}, 'trusted_auth_table': {'a2': {'ADDRESS': '192.168.1.100', 'PORT': '6667'}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': '6668'}}, 'trusted_auth_things': {'a2': ['t6', 't9'], 'a3': ['t8', 't10']}}
-11:18,359 root INFO Available resources: 3/12
+18:05,926 root INFO Available resources: 6/12
 registered_entity_table:
-{'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}}
+{'t2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}}
 trusted_auth_table:
 {'a2': {'ADDRESS': '192.168.1.100', 'PORT': '6667'}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': '6668'}}
 trusted_auth_things:
 {'a2': ['t6', 't9'], 'a3': ['t8', 't10']}
-11:18,359 root INFO a1 Start Listening on 192.168.1.100:5005
-11:18,360 root INFO Working
-11:19,360 root INFO Working
-11:19,360 root INFO Working
-11:20,360 root INFO Working
-11:20,361 root INFO Working
-11:21,361 root INFO Working
-11:21,361 root INFO Working
-11:22,362 root INFO Working
-11:22,362 root INFO Working
-11:23,362 root INFO Working
-11:23,363 root INFO Working
+18:05,926 root INFO a1 Start Listening on 192.168.1.100:5001
+18:05,514 root INFO Message:
+'{"MESSAGE_TYPE": 0, "THING_ID": "t1", "ADDRESS": "192.168.1.100", "PORT": 6001, "SEC_REQ": 3, "THING_SIGNATURE": "E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]"}'
+ From: ('192.168.1.100', 58497)
+18:05,515 root INFO Thing aggiunta:
+{'ADDRESS': '192.168.1.100', 'PORT': 6001, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}
+18:05,515 root INFO Nuova thing aggiunta
+18:05,515 root INFO Try to send:
+{'MESSAGE_TYPE': 1, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xdd\\xf5R\\x8cvd\\xb5\\x97\\xdf\\x05'", 'ACCEPTED': 1, 'SESSION_KEY': 'S_K_a1_t1'}
+ to 192.168.1.100:6001
+18:05,515 root INFO Sent:
+{'MESSAGE_TYPE': 1, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xdd\\xf5R\\x8cvd\\xb5\\x97\\xdf\\x05'", 'ACCEPTED': 1, 'SESSION_KEY': 'S_K_a1_t1'}
+ to 192.168.1.100:6001
+18:05,515 root ERROR Auth.auth_update() missing 2 required positional arguments: 'message' and 'address'
+18:05,515 root ERROR Error during register_response handling, with {'ADDRESS': '192.168.1.100', 'PORT': 6001, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}
+18:05,515 root INFO Available resources: 3/12
+registered_entity_table:
+{'t2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't1': {'ADDRESS': '192.168.1.100', 'PORT': 6001, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}}
+trusted_auth_table:
+{'a2': {'ADDRESS': '192.168.1.100', 'PORT': '6667'}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': '6668'}}
+trusted_auth_things:
+{'a2': ['t6', 't9'], 'a3': ['t8', 't10']}
+18:05,927 root INFO Working
