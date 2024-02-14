@@ -11,32 +11,32 @@ class Auth:
     trusted_auth_table={}
     trusted_auth_things={}
 
-    def __init__(self, ip, port):
+    def __init__(self):
         logging.basicConfig(
         level=logging.DEBUG,
         filename=f"data/log/{socket.gethostname()}_log.log",
         format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-        datefmt='%H:%M:%S')
-        self.ip = ip
-        self.port = int(port)
-        self.security_level=int(os.environ.get('SEC_LEV'))
-        self.resource=int(os.environ.get('RESOURCE'))
-        self.avaliable_resorce=int(self.resource)
+        datefmt='%H:%M')
+        self.load_init_config()
+        self.avaliable_resource_align()
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.socket.bind((self.ip, self.port))
         self.hostname=socket.gethostname()
-        self.load_init_config()
+
 
     def load_init_config(self):
         try:
             with open('data/config/config.json', 'r') as json_file:
                 data = json.load(json_file)
-            logging.info(f"Config file:\n{data}")
+            #logging.info(f"Config file:\n{data}")
             self.registered_entity_table=data['registered_entity_table']
-            self.avaliable_resource_align()
+            self.ip=data["IP"]
+            self.port=data["UDP_PORT"]
+            self.security_level=data['SEC_LEV']
+            self.resource=data['RESOURCE']
+            self.avaliable_resorce=self.resource
             self.trusted_auth_table=data['trusted_auth_table']
             self.trusted_auth_things=data['trusted_auth_things']
-            #logging.info(self.registered_entity_table)
         except FileNotFoundError:
             logging.error("Config file not found.")
         except json.JSONDecodeError:
@@ -60,7 +60,10 @@ class Auth:
             logging.error(f"Error during resources alignment.")
 
     def auth_status(self):
-        return f"Available resources: {self.avaliable_resorce}/{self.resource}\nregistered_entity_table:\n{self.registered_entity_table} "
+        '''Return information about the auth, for istances its avaliable resources and its registered entity'''
+        return f"Available resources: {self.avaliable_resorce}/{self.resource}\nregistered_entity_table:\n{self.registered_entity_table}\ntrusted_auth_table:\n{self.trusted_auth_table}\ntrusted_auth_things:\n{self.trusted_auth_things}"
+
+        #return f"Available resources: {self.avaliable_resorce}/{self.resource}\nregistered_entity_table:\n{self.registered_entity_table}\ntrusted_auth_table:\{self.trusted_auth_table}\ntrusted_auth_things:\n{self.trusted_auth_things}"
 
     def encode_message(self,data):
         '''
@@ -83,6 +86,9 @@ class Auth:
         return plain
 
     def check_resource_requirements(self,message,address):
+        '''
+        Check if the Auth can accept a new things due to its resources
+        '''
         try:
             resource_needed=int(message['SEC_REQ']) #To define better
             if self.avaliable_resorce-int(message['SEC_REQ'])<0:
@@ -96,6 +102,9 @@ class Auth:
             logging.error(f"Error during security_requiremts handling, with {address}")
 
     def check_security_level(self,message,address):
+        '''
+        Check if the Auth can accept a new thing due to its offered security level. The security level offered by an Auth should be greater or equal of the thing's security requirement (SEQ_REQ) 
+        '''
         try:
             security_level_needed=int(message['SEC_REQ'])
             if security_level_needed>self.security_level:
@@ -108,6 +117,9 @@ class Auth:
             logging.error(f"Error during check_security_requiremts handling, with {address}")
 
     def register_response(self,message,address,accepted):
+        '''
+        After receiving a REGISTER_TO_AUTH from a Things, the Auth should respond with REGISTER_RESPONSE.
+        '''
         try:
             response={
                 "MESSAGE_TYPE": 1,
@@ -133,19 +145,21 @@ class Auth:
             logging.error(f"Error during register_response handling, with {address}")  
     
     def auth_update(self):
-        message={
+        thing_list=[]
+        for t in self.registered_entity_table.keys():
+            thing_list.append(t)
+                
+        for auth in self.trusted_auth_table.values():
+            message={
             "MESSAGE_TYPE": 8,
             "AUTH_ID": self.hostname,
-            "A_NONCE": str(os.urandom(10))
-        }
-        for t in self.registered_entity_table.keys():
-            if 'UPDATE' in message:
-                message['UPDATE'].update({t})
-            else:
-                message['UPDATE']={t}
-        
-        for auth in self.trusted_auth_table.values():
-            self.send(auth['ADDRESS'],auth['PORT'],message)
+            "A_NONCE": str(os.urandom(10)),
+            "UPDATE": thing_list
+            }
+            
+            #logging.info(message)
+            #logging.info(f"self.send({auth['ADDRESS']},{auth['PORT']},message)")
+            self.send(auth['ADDRESS'],int(auth['PORT']),message)
 
 
 
@@ -339,6 +353,17 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during get_auth_address for {thing}")
 
+    def auth_update(self,message,address):
+        try:
+            logging.info(self.trusted_auth_things)
+            auth=message['AUTH_ID']
+            things=message['UPDATE']
+            self.trusted_auth_things[auth]=things
+            logging.info(self.trusted_auth_things)
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during auth_update handling, with {address}")
+
     def handle_client(self, data, address):
         logging.info(f"Message:\n'{data.decode()}'\n From: {address}")
         plain_message = self.decode_message(data, address)
@@ -350,6 +375,8 @@ class Auth:
             self.session_key_request(plain_message,address)
         elif plain_message['MESSAGE_TYPE'] == 6:
             self.auth_session_keys(plain_message,address)
+        elif plain_message['MESSAGE_TYPE']==8:
+            self.auth_update(plain_message,address)
         else:
             logging.error("Message type was not recognized")
 
@@ -388,9 +415,10 @@ class Auth:
 
 if __name__ == "__main__":
 
-    auth_ip = os.environ.get('IP')
-    auth_port = os.environ.get('UDP_PORT')
-    auth = Auth(auth_ip, auth_port)
+    #auth_ip = os.environ.get('IP')
+    #auth_port = os.environ.get('UDP_PORT')
+    #auth = Auth(auth_ip, auth_port)
+    auth = Auth()
     auth.start_listening()    
 
     while True:

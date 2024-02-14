@@ -1,157 +1,21 @@
-18:02:19,386 root INFO Config file:
-{'registered_entity_table': {'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}}, 'COMMUNICATION_POLICY_TABLE': {}, 'CACHED_SESSION_KEY_TABLE': {}, 'trusted_auth_table': {'a2': {'ADDRESS': '192.168.1.100', 'PORT': '6667'}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': '6668'}}, 'trusted_auth_things': {'a2': ['t6', 't9'], 'a3': ['t8', 't10']}}
-18:02:19,386 root INFO Available resources: 3/12
+11:18,359 root INFO Config file:
+{'HOSTNAME': 'a1', 'IP': '192.168.1.100', 'UDP_PORT': 5005, 'SEC_LEV': 3, 'RESOURCE': 12, 'registered_entity_table': {'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}}, 'COMMUNICATION_POLICY_TABLE': {}, 'CACHED_SESSION_KEY_TABLE': {}, 'trusted_auth_table': {'a2': {'ADDRESS': '192.168.1.100', 'PORT': '6667'}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': '6668'}}, 'trusted_auth_things': {'a2': ['t6', 't9'], 'a3': ['t8', 't10']}}
+11:18,359 root INFO Available resources: 3/12
 registered_entity_table:
-{'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}} 
-18:02:19,386 root INFO a1 Start Listening on 192.168.1.100:5005
-18:02:23,816 root INFO Message:
-'{
-  "MESSAGE_TYPE": 0,
-  "THING_ID": "t4",
-  "ADDRESS":"192.168.1.100",
-  "PORT":"6665",
-  "SEC_REQ": 5,
-  "THING_SIGNATURE": "E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]"
-}'
- From: ('192.168.1.100', 57952)
-18:02:23,816 root INFO Auth cannot register ('192.168.1.100', 57952) cause it cannot grant the requested security level:
-Offered:3
-Required:5
-18:02:23,817 root INFO Try to send:
-{'MESSAGE_TYPE': 1, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xeft&\\xd4V\\x83\\t5v\\xe2'", 'ACCEPTED': 0, 'SUGGESTED_AUTH': {'a2': {'ADDRESS': '192.168.1.100', 'PORT': '6667'}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': '6668'}}}
- to 192.168.1.100:6666
-18:02:23,817 root INFO Sent:
-{'MESSAGE_TYPE': 1, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xeft&\\xd4V\\x83\\t5v\\xe2'", 'ACCEPTED': 0, 'SUGGESTED_AUTH': {'a2': {'ADDRESS': '192.168.1.100', 'PORT': '6667'}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': '6668'}}}
- to 192.168.1.100:6666
-18:02:23,817 root ERROR tuple indices must be integers or slices, not str
-18:02:23,817 root ERROR Error during register_response handling, with ('192.168.1.100', 57952)
-18:02:23,817 root INFO Available resources: 3/12
-registered_entity_table:
-{'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}} 
-18:02:49,387 root INFO Working
-18:07:55,133 root INFO Config file:
-{'registered_entity_table': {'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}}, 'COMMUNICATION_POLICY_TABLE': {}, 'CACHED_SESSION_KEY_TABLE': {}, 'trusted_auth_table': {'a2': {'ADDRESS': '192.168.1.100', 'PORT': '6667'}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': '6668'}}, 'trusted_auth_things': {'a2': ['t6', 't9'], 'a3': ['t8', 't10']}}
-18:07:55,133 root INFO Available resources: 3/12
-registered_entity_table:
-{'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}} 
-18:07:55,134 root INFO a1 Start Listening on 192.168.1.100:5005
-18:07:59,316 root INFO Message:
-'{
-  "MESSAGE_TYPE": 0,
-  "THING_ID": "t4",
-  "ADDRESS":"192.168.1.100",
-  "PORT":"6665",
-  "SEC_REQ": 5,
-  "THING_SIGNATURE": "E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]"
-}'
- From: ('192.168.1.100', 46919)
-18:07:59,316 root INFO Auth cannot register ('192.168.1.100', 46919) cause it cannot grant the requested security level:
-Offered:3
-Required:5
-18:07:59,317 root INFO Try to send:
-{'MESSAGE_TYPE': 1, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xbcH\\x92\\x07\\xb1/\\x91\\xda\\xf9\\x90'", 'ACCEPTED': 0, 'SUGGESTED_AUTH': {'a2': {'ADDRESS': '192.168.1.100', 'PORT': '6667'}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': '6668'}}}
- to 192.168.1.100:6666
-18:07:59,317 root INFO Sent:
-{'MESSAGE_TYPE': 1, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xbcH\\x92\\x07\\xb1/\\x91\\xda\\xf9\\x90'", 'ACCEPTED': 0, 'SUGGESTED_AUTH': {'a2': {'ADDRESS': '192.168.1.100', 'PORT': '6667'}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': '6668'}}}
- to 192.168.1.100:6666
-18:07:59,317 root INFO Available resources: 3/12
-registered_entity_table:
-{'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}} 
-18:08:25,134 root INFO Working
-18:08:25,441 root INFO Message:
-'{
-  "MESSAGE_TYPE": 0,
-  "THING_ID": "t4",
-  "ADDRESS":"192.168.1.100",
-  "PORT":"6665",
-  "SEC_REQ": 3,
-  "THING_SIGNATURE": "E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]"
-}'
- From: ('192.168.1.100', 51219)
-18:08:25,441 root INFO Thing aggiunta:
-{'ADDRESS': '192.168.1.100', 'PORT': 51219, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t4'}
-18:08:25,441 root INFO Nuova thing aggiunta
-18:08:25,441 root INFO Try to send:
-{'MESSAGE_TYPE': 1, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xab\\x84\\xf2\\x81`\\xdc\\xa6\\x96\\xa9\\xbb'", 'ACCEPTED': 1, 'SESSION_KEY': 'S_K_a1_t4'}
- to 192.168.1.100:6666
-18:08:25,441 root INFO Sent:
-{'MESSAGE_TYPE': 1, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xab\\x84\\xf2\\x81`\\xdc\\xa6\\x96\\xa9\\xbb'", 'ACCEPTED': 1, 'SESSION_KEY': 'S_K_a1_t4'}
- to 192.168.1.100:6666
-18:08:25,442 root INFO Try to send:
-{'MESSAGE_TYPE': 8, 'AUTH_ID': 'a1', 'A_NONCE': "b'd&<`\\xe4\\xe6\\xb1G.\\xbc'", 'UPDATE': {'t3', 't1', 't2', 't4'}}
- to 192.168.1.100:6667
-18:08:25,442 root ERROR Object of type set is not JSON serializable
-18:08:25,442 root ERROR Error during send, with 192.168.1.100:6667
-18:08:25,442 root INFO Try to send:
-{'MESSAGE_TYPE': 8, 'AUTH_ID': 'a1', 'A_NONCE': "b'd&<`\\xe4\\xe6\\xb1G.\\xbc'", 'UPDATE': {'t3', 't1', 't2', 't4'}}
- to 192.168.1.100:6668
-18:08:25,442 root ERROR Object of type set is not JSON serializable
-18:08:25,442 root ERROR Error during send, with 192.168.1.100:6668
-18:08:25,442 root INFO Available resources: 0/12
-registered_entity_table:
-{'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't4': {'ADDRESS': '192.168.1.100', 'PORT': 51219, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t4'}} 
-18:08:55,135 root INFO Working
-18:09:25,135 root INFO Working
-18:09:55,135 root INFO Working
-18:10:25,135 root INFO Working
-18:10:55,135 root INFO Working
-18:11:25,136 root INFO Working
-18:11:55,136 root INFO Working
-18:12:25,136 root INFO Working
-18:12:55,136 root INFO Working
-18:13:25,137 root INFO Working
-18:13:55,137 root INFO Working
-18:14:25,137 root INFO Working
-18:14:55,138 root INFO Working
-18:15:25,138 root INFO Working
-18:15:55,138 root INFO Working
-18:16:25,138 root INFO Working
-18:16:55,139 root INFO Working
-18:17:25,139 root INFO Working
-18:17:55,139 root INFO Working
-18:18:25,139 root INFO Working
-18:18:38,928 root INFO Config file:
-{'registered_entity_table': {'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}}, 'COMMUNICATION_POLICY_TABLE': {}, 'CACHED_SESSION_KEY_TABLE': {}, 'trusted_auth_table': {'a2': {'ADDRESS': '192.168.1.100', 'PORT': '6667'}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': '6668'}}, 'trusted_auth_things': {'a2': ['t6', 't9'], 'a3': ['t8', 't10']}}
-18:18:38,929 root INFO Available resources: 3/12
-registered_entity_table:
-{'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}} 
-18:18:38,929 root INFO a1 Start Listening on 192.168.1.100:5005
-18:18:54,736 root INFO Message:
-'{
-  "MESSAGE_TYPE": 0,
-  "THING_ID": "t4",
-  "ADDRESS":"192.168.1.100",
-  "PORT":"6665",
-  "SEC_REQ": 3,
-  "THING_SIGNATURE": "E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]"
-}'
- From: ('192.168.1.100', 59486)
-18:18:54,737 root INFO Thing aggiunta:
-{'ADDRESS': '192.168.1.100', 'PORT': 59486, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t4'}
-18:18:54,737 root INFO Nuova thing aggiunta
-18:18:54,737 root INFO Try to send:
-{'MESSAGE_TYPE': 1, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xb5\\xd75\\xcc\\xc1\\x89n\\x88\\xb8\\x85'", 'ACCEPTED': 1, 'SESSION_KEY': 'S_K_a1_t4'}
- to 192.168.1.100:6666
-18:18:54,737 root INFO Sent:
-{'MESSAGE_TYPE': 1, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xb5\\xd75\\xcc\\xc1\\x89n\\x88\\xb8\\x85'", 'ACCEPTED': 1, 'SESSION_KEY': 'S_K_a1_t4'}
- to 192.168.1.100:6666
-18:18:54,738 root INFO Try to send:
-{'MESSAGE_TYPE': 8, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xdat9\\xcc\\xab\\x1a\\x85}U\\r'", 'UPDATE': {'t3', 't2', 't1', 't4'}}
- to 192.168.1.100:6667
-18:18:54,738 root ERROR Object of type set is not JSON serializable
-18:18:54,738 root ERROR Error during send, with 192.168.1.100:6667
-18:18:54,738 root INFO Try to send:
-{'MESSAGE_TYPE': 8, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xdat9\\xcc\\xab\\x1a\\x85}U\\r'", 'UPDATE': {'t3', 't2', 't1', 't4'}}
- to 192.168.1.100:6668
-18:18:54,738 root ERROR Object of type set is not JSON serializable
-18:18:54,738 root ERROR Error during send, with 192.168.1.100:6668
-18:18:54,738 root INFO Available resources: 0/12
-registered_entity_table:
-{'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't4': {'ADDRESS': '192.168.1.100', 'PORT': 59486, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t4'}} 
-18:19:08,929 root INFO Working
-18:19:38,929 root INFO Working
-18:20:08,930 root INFO Working
-18:20:38,930 root INFO Working
-18:21:08,930 root INFO Working
-18:21:38,931 root INFO Working
-18:22:08,931 root INFO Working
+{'t1': {'ADDRESS': '192.168.1.100', 'PORT': 6666, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t1'}, 't2': {'ADDRESS': '192.168.1.100', 'PORT': 6667, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}, 't3': {'ADDRESS': '192.168.1.100', 'PORT': 6668, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t2'}}
+trusted_auth_table:
+{'a2': {'ADDRESS': '192.168.1.100', 'PORT': '6667'}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': '6668'}}
+trusted_auth_things:
+{'a2': ['t6', 't9'], 'a3': ['t8', 't10']}
+11:18,359 root INFO a1 Start Listening on 192.168.1.100:5005
+11:18,360 root INFO Working
+11:19,360 root INFO Working
+11:19,360 root INFO Working
+11:20,360 root INFO Working
+11:20,361 root INFO Working
+11:21,361 root INFO Working
+11:21,361 root INFO Working
+11:22,362 root INFO Working
+11:22,362 root INFO Working
+11:23,362 root INFO Working
+11:23,363 root INFO Working

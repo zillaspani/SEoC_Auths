@@ -1,3 +1,4 @@
+import json
 session_keys={'t6': 'S_K_t6', 't8': 'S_K_t8', 't9': 'S_K_t9'}
 
 trusted_auth_things={
@@ -59,8 +60,18 @@ def get_auth(thing):
 
 
 def main():
-    for auth in trusted_auth_table.values():
-        print(f"{auth['ADDRESS']}+{auth['PORT']}")
+  message={
+      "MESSAGE_TYPE": 8,
+      "AUTH_ID": "hostname",
+      "A_NONCE": "str(os.urandom(10)"
+  }
+  for t in registered_entity_table.keys():
+    if 'UPDATE' in message:
+        dict(message['UPDATE']).update(t)
+    else:
+        message['UPDATE']=t
+
+  print(message)
   
 
 
