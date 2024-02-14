@@ -136,8 +136,8 @@ class Auth:
                 response['SESSION_KEY']=session_key
 
                 
-            self.send(address[0],6666,response)
-            #self.send(address[0],address[1],response)
+            #self.send(address[0],6666,response) #ONLY FOR LOCAL TESTING
+            self.send(address[0],address[1],response)
             if accepted == 1:
                 self.auth_update()
         except Exception as ex:
@@ -145,6 +145,9 @@ class Auth:
             logging.error(f"Error during register_response handling, with {address}")  
     
     def auth_update(self):
+        """
+        After that a Thing become registerd to an Auth, the latter have to notice this to its trusted Auths.
+        """
         thing_list=[]
         for t in self.registered_entity_table.keys():
             thing_list.append(t)
@@ -164,6 +167,9 @@ class Auth:
 
 
     def gen_key(self,par1,par2):
+        '''
+        Given two parametes, it will return a key
+        '''
         return f"S_K_{par1}_{par2}"
     
     def add_thing(self,message,address):
