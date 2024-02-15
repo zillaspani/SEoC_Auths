@@ -27,7 +27,7 @@ class Auth:
         try:
             with open('data/config/config.json', 'r') as json_file:
                 data = json.load(json_file)
-            #logging.info(f"Config file:\n{data}")
+            #logging.debug(f"Config file:\n{data}")
             self.registered_entity_table=data['registered_entity_table']
             self.ip=data["IP"]
             self.port=data["UDP_PORT"]
@@ -49,11 +49,11 @@ class Auth:
         '''
         try:
             for thing in self.registered_entity_table.values():
-                #logging.info(thing)
+                #logging.debug(thing)
                 self.avaliable_resorce=self.avaliable_resorce-int(thing['SEC_REQ'])
 
             if self.avaliable_resorce<0: raise Exception("Resource already allocated, please check config file")
-            logging.info(self.auth_status())
+            logging.debug(self.auth_status())
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during resources alignment.")
@@ -91,7 +91,7 @@ class Auth:
         try:
             resource_needed=int(message['SEC_REQ']) #To define better
             if self.avaliable_resorce-int(message['SEC_REQ'])<0:
-                logging.info(f"Auth cannot register {address} cause there aren't enougth resouces avaliable:\nAvailable:{self.avaliable_resorce}\nRequired:{resource_needed}")
+                logging.debug(f"Auth cannot register {address} cause there aren't enougth resouces avaliable:\nAvailable:{self.avaliable_resorce}\nRequired:{resource_needed}")
                 return False
             else:
                 self.avaliable_resorce=self.avaliable_resorce-resource_needed
@@ -107,7 +107,7 @@ class Auth:
         try:
             security_level_needed=int(message['SEC_REQ'])
             if security_level_needed>self.security_level:
-                logging.info(f"Auth cannot register {address} cause it cannot grant the requested security level:\nOffered:{self.security_level}\nRequired:{security_level_needed}")
+                logging.debug(f"Auth cannot register {address} cause it cannot grant the requested security level:\nOffered:{self.security_level}\nRequired:{security_level_needed}")
                 return False
             else:
                 return True
@@ -133,7 +133,7 @@ class Auth:
                 response['SUGGESTED_AUTH']=self.trusted_auth_table
             else:
                 session_key=self.add_thing(message)
-                logging.info("Nuova thing aggiunta")
+                logging.debug("Nuova thing aggiunta")
                 response['SESSION_KEY']=session_key
 
             self.send(message['ADDRESS'],message['PORT'],response)
@@ -181,7 +181,7 @@ class Auth:
                 "SESSION_KEY": session_key
             }
             self.registered_entity_table[message['THING_ID']]=new_thing
-            logging.info(f"Thing aggiunta:\n{new_thing}")
+            logging.debug(f"Thing aggiunta:\n{new_thing}")
             return session_key
         except Exception as ex:
             logging.error(ex)
@@ -206,7 +206,7 @@ class Auth:
                 self.register_response(message,address,0)
             else:
                 self.register_response(message,address,1)
-            logging.info(self.auth_status())
+            logging.debug(self.auth_status())
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during register_to_auth handling, with {address}")
@@ -234,7 +234,7 @@ class Auth:
                 address=self.get_thing_address(message['THING_ID'])
                 self.send(address['ADDRESS'],address['PORT'],response)
             else:
-                logging.info("Thing doesn't recognised, ignoring message")
+                logging.debug("Thing doesn't recognised, ignoring message")
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during auth_hello handling, with {address}")
@@ -337,7 +337,7 @@ class Auth:
             session_keys=message['SESSION_KEYS']
             for t in dict(session_keys).keys():
                 thing_address=self.get_thing_address(t)
-                logging.info(thing_address)
+                logging.debug(thing_address)
                 response={
                     "MESSAGE_TYPE": 7,
                     "AUTH_ID": self.hostname,
@@ -360,17 +360,17 @@ class Auth:
 
     def auth_update(self,message,address):
         try:
-            logging.info(self.trusted_auth_things)
+            logging.debug(self.trusted_auth_things)
             auth=message['AUTH_ID']
             things=message['UPDATE']
             self.trusted_auth_things[auth]=things
-            logging.info(self.trusted_auth_things)
+            logging.debug(self.trusted_auth_things)
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during auth_update handling, with {address}")
 
     def handle_client(self, data, address):
-        logging.info(f"Message:\n'{data.decode()}'\n From: {address}")
+        logging.debug(f"Message:\n'{data.decode()}'\n From: {address}")
         plain_message = self.decode_message(data, address)
         if plain_message['MESSAGE_TYPE'] == 0:
             self.register_to_auth(plain_message, address)
@@ -387,7 +387,7 @@ class Auth:
 
     def send(self,receiver_ip,receiver_port,message):
         try:
-            logging.info(f"Try to send message to {receiver_ip}:{receiver_port}")
+            logging.debug(f"Try to send message to {receiver_ip}:{receiver_port}")
             UDP_IP = receiver_ip
             UDP_PORT = receiver_port
             MESSAGE = message
@@ -395,7 +395,7 @@ class Auth:
             sock = socket.socket(socket.AF_INET, 
                                 socket.SOCK_DGRAM) 
             sock.sendto(MESSAGE_BYTE, (UDP_IP, UDP_PORT))
-            logging.info(f"Sent:\n{message}")
+            logging.debug(f"Sent:\n{message}")
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during send, with {receiver_ip}:{receiver_port}")
@@ -406,7 +406,7 @@ class Auth:
             self.handle_client(data,address)
             
     def start_listening(self):
-        logging.info(f"{self.hostname} Start Listening on {self.ip}:{self.port}")
+        logging.debug(f"{self.hostname} Start Listening on {self.ip}:{self.port}")
         listening_thread = threading.Thread(target=self.listenT, daemon= True)
         listening_thread.start()
             
@@ -424,5 +424,5 @@ if __name__ == "__main__":
 
     while True:
         time.sleep(30)
-        logging.info("Working")
+        logging.debug("Working")
 
