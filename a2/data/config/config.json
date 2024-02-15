@@ -1,30 +1,30 @@
 {
-  "HOSTNAME":"a1",
+  "HOSTNAME":"a2",
   "IP":"192.168.1.100",
-  "UDP_PORT":5001,
+  "UDP_PORT":5002,
   "SEC_LEV":3,
-  "RESOURCE":12,  
+  "RESOURCE":6,  
   
   "registered_entity_table": {
-      "t11":{
+      "t21":{
         "ADDRESS": "192.168.1.100",
-        "PORT": 6011,
+        "PORT": 6021,
         "SEC_REQ": 3,
-        "SESSION_KEY":"S_K_a1_t11"
+        "SESSION_KEY":"S_K_a1_t21"
       },
-      "t12":{
+      "t22":{
         "ADDRESS": "192.168.1.100",
-        "PORT": 6012,
+        "PORT": 6022,
         "SEC_REQ": 3,
-        "SESSION_KEY":"S_K_a1_t12"
+        "SESSION_KEY":"S_K_a1_t22"
       }
     },
     "COMMUNICATION_POLICY_TABLE":{},
     "CACHED_SESSION_KEY_TABLE":{},
     "trusted_auth_table":{
-      "a2":{
+      "a1":{
         "ADDRESS":"192.168.1.100",
-        "PORT": 5002
+        "PORT": 5001
       },
       "a3":{
         "ADDRESS":"192.168.1.100",
@@ -32,9 +32,9 @@
       }
     },
     "trusted_auth_things":{
-      "a2": [
-        "t21",
-        "t22"
+      "a1": [
+        "t11",
+        "t12"
       ],
       "a3":[
         "t31",
