@@ -164,7 +164,6 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during auth_update handling")
         
-
     def gen_key(self,par1,par2):
         '''
         Given two parametes, it will return a key

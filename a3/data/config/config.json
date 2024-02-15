@@ -3,7 +3,7 @@
   "IP":"192.168.1.100",
   "UDP_PORT":5003,
   "SEC_LEV":3,
-  "RESOURCE":6,  
+  "RESOURCE":9,  
   
   "registered_entity_table": {
       "t31":{
@@ -26,9 +26,9 @@
         "ADDRESS":"192.168.1.100",
         "PORT": 5001
       },
-      "a3":{
+      "a2":{
         "ADDRESS":"192.168.1.100",
-        "PORT": 5003
+        "PORT": 5002
       }
     },
     "trusted_auth_things":{
@@ -36,9 +36,9 @@
         "t11",
         "t12"
       ],
-      "a3":[
-        "t31",
-        "t32"
+      "a2":[
+        "t21",
+        "t22"
       ]
     }
 }
