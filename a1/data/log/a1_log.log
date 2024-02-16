@@ -1,0 +1,94 @@
+16:27,539 DEBUG Available resources: 3/9
+registered_entity_table:
+{'t11': {'ADDRESS': '192.168.1.100', 'PORT': 6011, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t11'}, 't12': {'ADDRESS': '192.168.1.100', 'PORT': 6012, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t12'}}
+trusted_auth_table:
+{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
+trusted_auth_things:
+{'a2': ['t21', 't22'], 'a3': ['t31', 't32']}
+16:27,539 DEBUG a1 Start Listening on 192.168.1.100:5001
+16:27,839 DEBUG Message:
+'{"MESSAGE_TYPE": 0, "THING_ID": "t13", "ADDRESS": "192.168.1.100", "PORT": 6013, "SEC_REQ": 3, "THING_SIGNATURE": "E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]"}'
+ From: ('192.168.1.100', 56182)
+16:27,840 DEBUG Thing aggiunta:
+{'ADDRESS': '192.168.1.100', 'PORT': 6013, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t13'}
+16:27,840 DEBUG Nuova thing aggiunta
+16:27,840 DEBUG Try to send message to 192.168.1.100:6013
+16:27,840 DEBUG Sent:
+{'MESSAGE_TYPE': 1, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\xef\\xffM\\xbfF\\xbcA\\x0e\\x84u'", 'ACCEPTED': 1, 'SESSION_KEY': 'S_K_a1_t13'}
+16:27,840 DEBUG Try to send message to 192.168.1.100:5002
+16:27,841 DEBUG Sent:
+{'MESSAGE_TYPE': 8, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x1c9\\x00\\xab\\xa2e\\xce\\xbbLr'", 'UPDATE': ['t11', 't12', 't13']}
+16:27,841 DEBUG Available resources: 0/9
+registered_entity_table:
+{'t11': {'ADDRESS': '192.168.1.100', 'PORT': 6011, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t11'}, 't12': {'ADDRESS': '192.168.1.100', 'PORT': 6012, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t12'}, 't13': {'ADDRESS': '192.168.1.100', 'PORT': 6013, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t13'}}
+trusted_auth_table:
+{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
+trusted_auth_things:
+{'a2': ['t21', 't22'], 'a3': ['t31', 't32']}
+16:27,841 DEBUG Message:
+'{"MESSAGE_TYPE": 2, "THING_ID": "t13", "ADDRESS": "192.168.1.100", "PORT": 6013}'
+ From: ('192.168.1.100', 41297)
+16:27,842 DEBUG Try to send message to 192.168.1.100:6013
+16:27,842 DEBUG Sent:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\x9d\\x88\\x15x\\xce\\xbbe\\xf5Yx'"}
+16:27,842 DEBUG Message:
+'{"MESSAGE_TYPE": 4, "THING_ID": "t13", "A_NONCE": "b'\\x9d\\x88\\x15x\\xce\\xbbe\\xf5Yx'", "T_NONCE": "b'\\x88Pp\\xa5\\x8b\\x0c9SPj'", "WHO": ["t22"]}'
+ From: ('192.168.1.100', 54169)
+16:27,843 DEBUG Try to send message to 192.168.1.100:5002
+16:27,843 DEBUG Sent:
+{'MESSAGE_TYPE': 6, 'AUTH_ID': 'a1', 'A_NONCE': "b'6\\xc3m\\x8f\\xfe\\xd3\\n`c?'", 'FROM': 't13', 'SESSION_KEYS': {'t22': 'S_K_t13_t22'}}
+16:27,843 DEBUG Try to send message to 192.168.1.100:6013
+16:27,843 DEBUG Sent:
+{'MESSAGE_TYPE': 5, 'AUTH_ID': 'a1', 'A_NONCE': 'b\'\\xbb\\x01"?\\x9d\\xb1wL\\xa0\\xd7\'', 'SESSION_KEY': {'t22': 'S_K_t13_t22'}}
+16:27,844 DEBUG Message:
+'{"MESSAGE_TYPE": 2, "THING_ID": "t13", "ADDRESS": "192.168.1.100", "PORT": 6013}'
+ From: ('192.168.1.100', 46043)
+16:27,844 DEBUG Try to send message to 192.168.1.100:6013
+16:27,845 DEBUG Sent:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': 'b\'d";\\x00-\\x03|\\xe7|\\xc7\''}
+16:27,845 DEBUG Message:
+'{"MESSAGE_TYPE": 4, "THING_ID": "t13", "A_NONCE": "b'd\";\\x00-\\x03|\\xe7|\\xc7'", "T_NONCE": "b\"\\x904\\xe9'\\xe6\\xc1\\xb8]3^\"", "WHO": ["t22"]}'
+ From: ('192.168.1.100', 39894)
+16:27,845 DEBUG Try to send message to 192.168.1.100:5002
+16:27,845 DEBUG Sent:
+{'MESSAGE_TYPE': 6, 'AUTH_ID': 'a1', 'A_NONCE': "b'^(\\xc3\\xbf2\\x96\\xa6\\x95\\x9f\\xf6'", 'FROM': 't13', 'SESSION_KEYS': {'t22': 'S_K_t13_t22'}}
+16:27,845 DEBUG Try to send message to 192.168.1.100:6013
+16:27,845 DEBUG Sent:
+{'MESSAGE_TYPE': 5, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xf23\\xe3\\xbcdN\\xf1\\x1b\\\\\\xf7'", 'SESSION_KEY': {'t22': 'S_K_t13_t22'}}
+16:27,846 DEBUG Message:
+'{"MESSAGE_TYPE": 2, "THING_ID": "t13", "ADDRESS": "192.168.1.100", "PORT": 6013}'
+ From: ('192.168.1.100', 34716)
+16:27,846 DEBUG Try to send message to 192.168.1.100:6013
+16:27,847 DEBUG Sent:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\xbce=ck\\x01\\xfcP\\xef\\xce'"}
+16:27,847 DEBUG Message:
+'{"MESSAGE_TYPE": 4, "THING_ID": "t13", "A_NONCE": "b'\\xbce=ck\\x01\\xfcP\\xef\\xce'", "T_NONCE": "b'!.\\xf2O\\t4\\xc9+\\xe1V'", "WHO": ["t22"]}'
+ From: ('192.168.1.100', 55746)
+16:27,847 DEBUG Try to send message to 192.168.1.100:5002
+16:27,847 DEBUG Sent:
+{'MESSAGE_TYPE': 6, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x12\\xcd\\xf5\\x10\\x85Y\\xc7\\xcdjN'", 'FROM': 't13', 'SESSION_KEYS': {'t22': 'S_K_t13_t22'}}
+16:27,848 DEBUG Try to send message to 192.168.1.100:6013
+16:27,848 DEBUG Sent:
+{'MESSAGE_TYPE': 5, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xa7R\\x1b\\x12\\x02\\x8f\\xf03\\xdf2'", 'SESSION_KEY': {'t22': 'S_K_t13_t22'}}
+16:27,852 DEBUG Message:
+'{"MESSAGE_TYPE": 2, "THING_ID": "t13", "ADDRESS": "192.168.1.100", "PORT": 6013}'
+ From: ('192.168.1.100', 52806)
+16:27,852 DEBUG Try to send message to 192.168.1.100:6013
+16:27,852 DEBUG Sent:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\xc1S\\xf2a\\xd3\\xb2z\\xbd\\x9c\\xf1'"}
+16:27,853 DEBUG Message:
+'{"MESSAGE_TYPE": 4, "THING_ID": "t13", "A_NONCE": "b'\\xc1S\\xf2a\\xd3\\xb2z\\xbd\\x9c\\xf1'", "T_NONCE": "b'l\\xf5=\\xfa\\x07e_4:\\xe2'", "WHO": ["t22"]}'
+ From: ('192.168.1.100', 45818)
+16:27,853 DEBUG Try to send message to 192.168.1.100:5002
+16:27,853 DEBUG Sent:
+{'MESSAGE_TYPE': 6, 'AUTH_ID': 'a1', 'A_NONCE': 'b"5n\\x1c\'\\xbb=6rV\\xde"', 'FROM': 't13', 'SESSION_KEYS': {'t22': 'S_K_t13_t22'}}
+16:27,853 DEBUG Try to send message to 192.168.1.100:6013
+16:27,853 DEBUG Sent:
+{'MESSAGE_TYPE': 5, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xe3\\xe5\\xd0\\x83\\x95\\xd5\\xe9\\xd9-g'", 'SESSION_KEY': {'t22': 'S_K_t13_t22'}}
+16:27,540 DEBUG Working
+16:27,857 DEBUG Message:
+'{"MESSAGE_TYPE": 2, "THING_ID": "t13", "ADDRESS": "192.168.1.100", "PORT": 6013}'
+ From: ('192.168.1.100', 38706)
+16:27,857 DEBUG Try to send message to 192.168.1.100:6013
+16:27,857 DEBUG Sent:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': 'b\'(\\xe5\\x1f\\xc8!\\xcc\\xd1\\\'"q\''}

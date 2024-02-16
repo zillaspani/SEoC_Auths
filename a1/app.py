@@ -85,7 +85,6 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during decode_message handling, with {address}")
 
-
     def check_resource_requirements(self,message,address):
         '''
         Check if the Auth can accept a new things due to its resources
@@ -335,8 +334,9 @@ class Auth:
 
             self.send_auth_session_key(session_keys,message['THING_ID'])
 
-            self.send(address[0],6666,session_key_response)
-            #self.send(address[0],address[1],response)
+            address=self.get_thing_address(message['THING_ID'])
+            self.send(address['ADDRESS'],address['PORT'],session_key_response)
+
 
 
         except Exception as ex:
@@ -355,7 +355,7 @@ class Auth:
                     "A_NONCE": str(os.urandom(10))
                     }
                 response['SESSION_KEY']={message['FROM']:session_keys[t]}
-                self.send(thing_address['ADDRESS'],thing_address['PORT'],response)
+                #self.send(thing_address['ADDRESS'],thing_address['PORT'],response)
 
 
         except Exception as ex:
@@ -380,6 +380,22 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during auth_update handling, with {address}")
 
+    def send(self,receiver_ip,receiver_port,message):
+        try:
+            logging.debug(f"Try to send message to {receiver_ip}:{receiver_port}")
+            UDP_IP = receiver_ip
+            UDP_PORT = receiver_port
+            MESSAGE = message
+            MESSAGE_BYTE=json.dumps(MESSAGE).encode("UTF-8")
+            sock = socket.socket(socket.AF_INET, 
+                                socket.SOCK_DGRAM) 
+            sock.sendto(MESSAGE_BYTE, (UDP_IP, UDP_PORT))
+            logging.debug(f"Sent:\n{message}")
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during send, with {receiver_ip}:{receiver_port}")
+
+
     def handle_client(self, data, address):
         logging.debug(f"Message:\n'{data.decode()}'\n From: {address}")
         plain_message = self.decode_message(data, address)
@@ -396,20 +412,6 @@ class Auth:
         else:
             logging.error("Message type was not recognized")
 
-    def send(self,receiver_ip,receiver_port,message):
-        try:
-            logging.debug(f"Try to send message to {receiver_ip}:{receiver_port}")
-            UDP_IP = receiver_ip
-            UDP_PORT = receiver_port
-            MESSAGE = message
-            MESSAGE_BYTE=json.dumps(MESSAGE).encode("UTF-8")
-            sock = socket.socket(socket.AF_INET, 
-                                socket.SOCK_DGRAM) 
-            sock.sendto(MESSAGE_BYTE, (UDP_IP, UDP_PORT))
-            logging.debug(f"Sent:\n{message}")
-        except Exception as ex:
-            logging.error(ex)
-            logging.error(f"Error during send, with {receiver_ip}:{receiver_port}")
 
     def listenT(self):
         while True:

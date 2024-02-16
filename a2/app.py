@@ -49,7 +49,6 @@ class Auth:
         '''
         try:
             for thing in self.registered_entity_table.values():
-                #logging.debug(thing)
                 self.avaliable_resorce=self.avaliable_resorce-int(thing['SEC_REQ'])
 
             if self.avaliable_resorce<0: raise Exception("Resource already allocated, please check config file")
@@ -61,8 +60,6 @@ class Auth:
     def auth_status(self):
         '''Return information about the auth, for istances its avaliable resources and its registered entity'''
         return f"Available resources: {self.avaliable_resorce}/{self.resource}\nregistered_entity_table:\n{self.registered_entity_table}\ntrusted_auth_table:\n{self.trusted_auth_table}\ntrusted_auth_things:\n{self.trusted_auth_things}"
-
-        #return f"Available resources: {self.avaliable_resorce}/{self.resource}\nregistered_entity_table:\n{self.registered_entity_table}\ntrusted_auth_table:\{self.trusted_auth_table}\ntrusted_auth_things:\n{self.trusted_auth_things}"
 
     def encode_message(self,data):
         '''
@@ -81,8 +78,13 @@ class Auth:
         Give message and andress, it will decode the encrypt message in a plaintext message in json format.
         For now, it only trasform the stream in json.
         '''
-        plain=json.loads(data)
-        return plain
+        try:
+            plain=json.loads(data)
+            return plain
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during decode_message handling, with {address}")
+
 
     def check_resource_requirements(self,message,address):
         '''
@@ -115,6 +117,16 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during check_security_requiremts handling, with {address}")
 
+    def evaluate_auth_to_suggest(self,auth):
+        '''
+        To do
+        '''
+        try:
+            return auth
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during evaluate_auth_to_suggest handling")
+
     def register_response(self,message,address,accepted):
         '''
         After receiving a REGISTER_TO_AUTH from a Things, the Auth should respond with REGISTER_RESPONSE.
@@ -130,7 +142,7 @@ class Auth:
             }
 
             if accepted == 0: #Register request was declined
-                response['SUGGESTED_AUTH']=self.trusted_auth_table
+                response['SUGGESTED_AUTH']=self.evaluate_auth_to_suggest(self.trusted_auth_table)
             else:
                 session_key=self.add_thing(message)
                 logging.debug("Nuova thing aggiunta")
@@ -164,7 +176,6 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during auth_update handling")
         
-
     def gen_key(self,par1,par2):
         '''
         Given two parametes, it will return a key
@@ -324,8 +335,9 @@ class Auth:
 
             self.send_auth_session_key(session_keys,message['THING_ID'])
 
-            self.send(address[0],6666,session_key_response)
-            #self.send(address[0],address[1],response)
+            address=self.get_thing_address(message['THING_ID'])
+            self.send(address['ADDRESS'],address['PORT'],session_key_response)
+
 
 
         except Exception as ex:
@@ -344,7 +356,7 @@ class Auth:
                     "A_NONCE": str(os.urandom(10))
                     }
                 response['SESSION_KEY']={message['FROM']:session_keys[t]}
-                self.send(thing_address['ADDRESS'],thing_address['PORT'],response)
+                #self.send(thing_address['ADDRESS'],thing_address['PORT'],response)
 
 
         except Exception as ex:
@@ -380,8 +392,8 @@ class Auth:
             self.session_key_request(plain_message,address)
         elif plain_message['MESSAGE_TYPE'] == 6:
             self.auth_session_keys(plain_message,address)
-        elif plain_message['MESSAGE_TYPE']==8:
-            self.auth_update(plain_message,address)
+        #elif plain_message['MESSAGE_TYPE']==8:
+        #    self.auth_update(plain_message,address)
         else:
             logging.error("Message type was not recognized")
 

@@ -3,7 +3,7 @@
   "IP":"192.168.1.100",
   "UDP_PORT":5001,
   "SEC_LEV":3,
-  "RESOURCE":12,  
+  "RESOURCE":9,  
   
   "registered_entity_table": {
       "t11":{
