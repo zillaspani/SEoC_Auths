@@ -10,6 +10,8 @@ class Auth:
     registered_entity_table={}
     trusted_auth_table={}
     trusted_auth_things={}
+    pending_keys={}
+    lock = threading.Lock()
 
     def __init__(self):
         logging.basicConfig(
@@ -42,6 +44,34 @@ class Auth:
             logging.error("Error decoding JSON data. Check if the JSON config file is valid.")
         except Exception as e:
             logging.error("An unexpected error occurred:", e)
+
+    def get_message_type(self, type):
+        if type == 0:
+            return "REGISTER_TO_AUTH"
+        elif type == 1:
+            return "REGISTER_RESPONSE"
+        elif type == 2:
+            return "CONNECT_TO_AUTH"
+        elif type == 3:
+            return "AUTH_HELLO"
+        elif type == 4:
+            return "SESSION_KEY_REQUEST"
+        elif type == 5:
+            return "SESSION_KEY_RESPONSE"
+        elif type == 6:
+            return "AUTH_SESSION_KEYS"
+        elif type == 7:
+            return "TRIGGER_THING"
+        elif type == 8:
+            return "AUTH_UPDATE"
+        elif type == 9:
+            return "UPDATE_REQUEST"
+        elif type == 10:
+            return "UPDATE_KEYS"
+        elif type == 11:
+            return "START"
+        else:
+            return "Unknown message type"
 
     def avaliable_resource_align(self):
         '''
@@ -126,7 +156,7 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during evaluate_auth_to_suggest handling")
 
-    def register_response(self,message,address,accepted):
+    def send_register_response(self,message,address,accepted):
         '''
         After receiving a REGISTER_TO_AUTH from a Things, the Auth should respond with REGISTER_RESPONSE.
         '''
@@ -136,15 +166,13 @@ class Auth:
                 "AUTH_ID": self.hostname,
                 "ADDRESS": self.ip,
                 "PORT": self.port,
-                "A_NONCE": str(os.urandom(10)),
+                "A_NONCE": str(os.urandom(2)),
                 "ACCEPTED": accepted,
             }
-
-            if accepted == 0: #Register request was declined
-                response['SUGGESTED_AUTH']=self.evaluate_auth_to_suggest(self.trusted_auth_table)
-            else:
+            response['SUGGESTED_AUTH']=self.evaluate_auth_to_suggest(self.trusted_auth_table)
+            if accepted == 1:
                 session_key=self.add_thing(message)
-                logging.debug("Nuova thing aggiunta")
+                logging.info("Nuova thing aggiunta")
                 response['SESSION_KEY']=session_key
 
             self.send(message['ADDRESS'],message['PORT'],response)
@@ -166,8 +194,10 @@ class Auth:
             for auth in self.trusted_auth_table.values():
                 message={
                 "MESSAGE_TYPE": 8,
+                "ADDRESS": self.ip,
+                "PORT": self.port,
                 "AUTH_ID": self.hostname,
-                "A_NONCE": str(os.urandom(10)),
+                "A_NONCE": str(os.urandom(2)),
                 "UPDATE": thing_list
                 }
                 self.send(auth['ADDRESS'],auth['PORT'],message)
@@ -188,9 +218,12 @@ class Auth:
                 "ADDRESS": message['ADDRESS'],
                 "PORT": message['PORT'],
                 "SEC_REQ": 3,
-                "SESSION_KEY": session_key
+                "SESSION_KEY": session_key,
+                "LAST": time.time()
             }
+            self.lock.acquire()
             self.registered_entity_table[message['THING_ID']]=new_thing
+            self.lock.release()
             logging.debug(f"Thing aggiunta:\n{new_thing}")
             return session_key
         except Exception as ex:
@@ -209,13 +242,13 @@ class Auth:
             if self.check_if_registered(message,address):
                 pass
             elif not self.check_think_signature(message,address):
-                self.register_response(message,address,0)
+                self.send_register_response(message,address,0)
             elif not self.check_security_level(message,address):
-                self.register_response(message,address,0)
+                self.send_register_response(message,address,0)
             elif not self.check_resource_requirements(message,address):
-                self.register_response(message,address,0)
+                self.send_register_response(message,address,0)
             else:
-                self.register_response(message,address,1)
+                self.send_register_response(message,address,1)
             logging.debug(self.auth_status())
         except Exception as ex:
             logging.error(ex)
@@ -227,19 +260,23 @@ class Auth:
         '''
         return True
 
-    def auth_hello(self,message,address):
+    def connect_to_auth(self,message,address):
         '''
         Make the response at CONNECT_TO_AUTH from Things,
         PS: A_NONCE shuold be stored to verify it in the next massege exchange.
         '''
         try:
+            timestamp = time.time()
             if message['THING_ID'] in self.registered_entity_table:
+                self.lock.acquire()
+                self.registered_entity_table[message['THING_ID']]['LAST'] = timestamp
+                self.lock.release()
                 response={
                 "MESSAGE_TYPE": 3,
                 "AUTH_ID": self.hostname,
                 "ADDRESS": self.ip,
                 "PORT": self.port,
-                "A_NONCE": str(os.urandom(10))
+                "A_NONCE": str(os.urandom(2))
             }
                 address=self.get_thing_address(message['THING_ID'])
                 self.send(address['ADDRESS'],address['PORT'],response)
@@ -309,7 +346,7 @@ class Auth:
                 message={
                     "MESSAGE_TYPE": 6,
                     "AUTH_ID": self.hostname,
-                    "A_NONCE": str(os.urandom(10)),
+                    "A_NONCE": str(os.urandom(2)),
                     "FROM": sender_thing
                 }
                 message['SESSION_KEYS']=d_auth[auth]
@@ -325,7 +362,7 @@ class Auth:
             session_key_response={
                 "MESSAGE_TYPE": 5,
                 "AUTH_ID": self.hostname,
-                "A_NONCE": str(os.urandom(10))
+                "A_NONCE": str(os.urandom(2))
             }
 
             session_keys=self.get_session_key(message,address)
@@ -346,17 +383,19 @@ class Auth:
     def auth_session_keys(self,message,address):
         try:
             session_keys=message['SESSION_KEYS']
-            for t in dict(session_keys).keys():
-                thing_address=self.get_thing_address(t)
-                logging.debug(thing_address)
-                response={
-                    "MESSAGE_TYPE": 7,
-                    "AUTH_ID": self.hostname,
-                    "A_NONCE": str(os.urandom(10))
-                    }
-                response['SESSION_KEY']={message['FROM']:session_keys[t]}
-                #self.send(thing_address['ADDRESS'],thing_address['PORT'],response)
+            self.lock.acquire()
+            for thing in session_keys:
+                record={message['FROM']:session_keys[thing]}
+                if thing in self.pending_keys:
+                    self.pending_keys[thing].update(record)
+                else:
+                    self.pending_keys[thing]=record                      
+            self.lock.release()
 
+            logging.info(self.pending_keys)
+
+            
+                
 
         except Exception as ex:
             logging.error(ex)
@@ -370,6 +409,9 @@ class Auth:
             logging.error(f"Error during get_thing_address for {thing}")
 
     def auth_update(self,message,address):
+        '''
+        Handling of AUTH_UPDATE message from other Auth
+        '''
         try:
             logging.debug(self.trusted_auth_things)
             auth=message['AUTH_ID']
@@ -379,6 +421,38 @@ class Auth:
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during auth_update handling, with {address}")
+
+    def get_pending_keys(self,thing):
+        try:
+            if thing in self.pending_keys:
+                self.lock.acquire()
+                ret=self.pending_keys.pop(thing)
+                self.lock.release()
+                return ret
+            else:
+                return {}
+
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during get_pending_keys handling")
+
+    def update_request(self,message):
+        try:
+            response={
+            "MESSAGE_TYPE": 10,
+            "AUTH_ID": self.hostname,
+            "ADDRESS": self.ip,
+            "PORT": self.port,
+            "A_NONCE": str(os.urandom(2)),
+            "SESSION_KEYS":self.get_pending_keys(message['THING_ID'])
+            }
+            self.send(message['ADDRESS'],message['PORT'],response)
+
+
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during update_request handling")
+
 
     def send(self,receiver_ip,receiver_port,message):
         try:
@@ -390,25 +464,26 @@ class Auth:
             sock = socket.socket(socket.AF_INET, 
                                 socket.SOCK_DGRAM) 
             sock.sendto(MESSAGE_BYTE, (UDP_IP, UDP_PORT))
-            logging.debug(f"Sent:\n{message}")
+            logging.info(f"Sent {self.get_message_type(message['MESSAGE_TYPE'])}:\n{message}\nto {receiver_ip}:{receiver_port}")
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during send, with {receiver_ip}:{receiver_port}")
 
-
     def handle_client(self, data, address):
-        logging.debug(f"Message:\n'{data.decode()}'\n From: {address}")
         plain_message = self.decode_message(data, address)
+        logging.info(f"Received {self.get_message_type(plain_message['MESSAGE_TYPE'])}\nmessage: {plain_message} from {plain_message['ADDRESS']}:{plain_message['PORT']}")
         if plain_message['MESSAGE_TYPE'] == 0:
             self.register_to_auth(plain_message, address)
         elif plain_message['MESSAGE_TYPE'] == 2:
-            self.auth_hello(plain_message,address)
+            self.connect_to_auth(plain_message,address)
         elif plain_message['MESSAGE_TYPE'] == 4:
             self.session_key_request(plain_message,address)
         elif plain_message['MESSAGE_TYPE'] == 6:
             self.auth_session_keys(plain_message,address)
         elif plain_message['MESSAGE_TYPE']==8:
             self.auth_update(plain_message,address)
+        elif plain_message['MESSAGE_TYPE']==9:
+            self.update_request(plain_message)
         else:
             logging.error("Message type was not recognized")
 
@@ -417,18 +492,44 @@ class Auth:
         while True:
             data, address = self.socket.recvfrom(1024)
             self.handle_client(data,address)
-            
+
+    def resourceT(self):
+        for thing in self.registered_entity_table:
+            self.registered_entity_table[thing]['LAST']=time.time()
+        while True:
+            time.sleep(30)
+            now=time.time()
+            to_delete=[]
+            for thing in self.registered_entity_table:
+                delta=now-self.registered_entity_table[thing]['LAST']
+                logging.debug(f"Delfa of {thing} is {delta}")
+                if delta > 10:
+                    to_delete.append(thing)
+
+            for thing in to_delete:
+                self.lock.acquire()
+                deleted=self.registered_entity_table.pop(thing)
+                logging.info(f"Deleted Thing {deleted}")
+                logging.info(self.registered_entity_table)
+                self.avaliable_resorce+=deleted['SEC_REQ']
+                self.lock.release()        
+            logging.info(self.auth_status())
+            self.send_auth_update()
+
+
     def start_listening(self):
         logging.debug(f"{self.hostname} Start Listening on {self.ip}:{self.port}")
         listening_thread = threading.Thread(target=self.listenT, daemon= True)
         listening_thread.start()
+        resource_thread = threading.Thread(target=self.resourceT, daemon= True)
+        resource_thread.start()
             
-    def template(self,message,address):
+    def template(self,message):
         try:
             pass
         except Exception as ex:
             logging.error(ex)
-            logging.error(f"Error during template handling, with {address}")
+            logging.error(f"Error during template handling")
 
 if __name__ == "__main__":
 
