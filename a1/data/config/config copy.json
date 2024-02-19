@@ -6,6 +6,18 @@
   "RESOURCE":9,  
   
   "registered_entity_table": {
+      "t11":{
+        "ADDRESS": "192.168.1.100",
+        "PORT": 6011,
+        "SEC_REQ": 3,
+        "SESSION_KEY":"S_K_a1_t11"
+      },
+      "t12":{
+        "ADDRESS": "192.168.1.100",
+        "PORT": 6012,
+        "SEC_REQ": 3,
+        "SESSION_KEY":"S_K_a1_t12"
+      }
     },
     "COMMUNICATION_POLICY_TABLE":{},
     "CACHED_SESSION_KEY_TABLE":{},
@@ -16,5 +28,9 @@
       }
     },
     "trusted_auth_things":{
+      "a2": [
+        "t21",
+        "t22"
+      ]
     }
 }

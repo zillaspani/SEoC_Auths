@@ -1,0 +1,114 @@
+10:00,372 DEBUG Available resources: 9/9
+registered_entity_table:
+{}
+trusted_auth_table:
+{'a1': {'ADDRESS': '192.168.1.100', 'PORT': 5001}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': 5003}}
+trusted_auth_things:
+{}
+10:00,372 DEBUG a2 Start Listening on 192.168.1.100:5002
+10:00,888 INFO Received AUTH_UPDATE
+message: {'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'K\\x8b'", 'UPDATE': ['t13']} from 192.168.1.100:5001
+10:00,888 DEBUG {}
+10:00,888 DEBUG {'a1': ['t13']}
+10:00,893 INFO Received REGISTER_TO_AUTH
+message: {'MESSAGE_TYPE': 0, 'THING_ID': 't22', 'ADDRESS': '192.168.1.100', 'PORT': 6022, 'SEC_REQ': 3, 'THING_SIGNATURE': 'E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]'} from 192.168.1.100:6022
+10:00,893 DEBUG Thing aggiunta:
+{'ADDRESS': '192.168.1.100', 'PORT': 6022, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a2_t22', 'LAST': 1708333239.8934023}
+10:00,893 INFO Nuova thing aggiunta
+10:00,893 DEBUG Try to send message to 192.168.1.100:6022
+10:00,893 INFO Sent REGISTER_RESPONSE:
+{'MESSAGE_TYPE': 1, 'AUTH_ID': 'a2', 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'A_NONCE': "b'\\x1b\\\\'", 'ACCEPTED': 1, 'SUGGESTED_AUTH': {'a1': {'ADDRESS': '192.168.1.100', 'PORT': 5001}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': 5003}}, 'SESSION_KEY': 'S_K_a2_t22'}
+to 192.168.1.100:6022
+10:00,893 DEBUG Try to send message to 192.168.1.100:5001
+10:00,893 INFO Sent AUTH_UPDATE:
+{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'AUTH_ID': 'a2', 'A_NONCE': "b'z\\xf1'", 'UPDATE': ['t22']}
+to 192.168.1.100:5001
+10:00,894 DEBUG Try to send message to 192.168.1.100:5003
+10:00,894 INFO Sent AUTH_UPDATE:
+{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'AUTH_ID': 'a2', 'A_NONCE': "b'\\xa1\\xd6'", 'UPDATE': ['t22']}
+to 192.168.1.100:5003
+10:00,894 DEBUG Available resources: 6/9
+registered_entity_table:
+{'t22': {'ADDRESS': '192.168.1.100', 'PORT': 6022, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a2_t22', 'LAST': 1708333239.8934023}}
+trusted_auth_table:
+{'a1': {'ADDRESS': '192.168.1.100', 'PORT': 5001}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': 5003}}
+trusted_auth_things:
+{'a1': ['t13']}
+10:00,894 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't22', 'ADDRESS': '192.168.1.100', 'PORT': 6022} from 192.168.1.100:6022
+10:00,894 DEBUG Try to send message to 192.168.1.100:6022
+10:00,894 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a2', 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'A_NONCE': "b'`*'"}
+to 192.168.1.100:6022
+10:00,897 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't22', 'ADDRESS': '192.168.1.100', 'PORT': 6022} from 192.168.1.100:6022
+10:00,897 DEBUG Try to send message to 192.168.1.100:6022
+10:00,897 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a2', 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'A_NONCE': "b'\\x8c\\xf4'"}
+to 192.168.1.100:6022
+10:00,900 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't22', 'ADDRESS': '192.168.1.100', 'PORT': 6022} from 192.168.1.100:6022
+10:00,900 DEBUG Try to send message to 192.168.1.100:6022
+10:00,901 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a2', 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'A_NONCE': "b'\\\\\\xb6'"}
+to 192.168.1.100:6022
+10:00,901 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't22', 'ADDRESS': '192.168.1.100', 'PORT': 6022} from 192.168.1.100:6022
+10:00,902 DEBUG Try to send message to 192.168.1.100:6022
+10:00,902 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a2', 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'A_NONCE': "b'wy'"}
+to 192.168.1.100:6022
+10:00,902 INFO Received AUTH_SESSION_KEYS
+message: {'MESSAGE_TYPE': 6, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'*\\xb8'", 'FROM': 't13', 'SESSION_KEYS': {'t22': 'S_K_t13_t22'}} from 192.168.1.100:5001
+10:00,902 INFO {'t22': {'t13': 'S_K_t13_t22'}}
+10:00,903 INFO Received UPDATE_REQUEST
+message: {'MESSAGE_TYPE': 9, 'THING_ID': 't22', 'ADDRESS': '192.168.1.100', 'PORT': 6022, 'T_NONCE': "b'l\\xf9'"} from 192.168.1.100:6022
+10:00,903 DEBUG Try to send message to 192.168.1.100:6022
+10:00,904 INFO Sent UPDATE_KEYS:
+{'MESSAGE_TYPE': 10, 'AUTH_ID': 'a2', 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'A_NONCE': "b'\\xf9l'", 'SESSION_KEYS': {'t13': 'S_K_t13_t22'}}
+to 192.168.1.100:6022
+10:01,903 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't22', 'ADDRESS': '192.168.1.100', 'PORT': 6022} from 192.168.1.100:6022
+10:01,903 DEBUG Try to send message to 192.168.1.100:6022
+10:01,903 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a2', 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'A_NONCE': "b'\\x8a\\x8f'"}
+to 192.168.1.100:6022
+10:01,373 DEBUG Working
+10:01,373 DEBUG Delfa of t22 is 0.4701879024505615
+10:01,373 INFO Available resources: 6/9
+registered_entity_table:
+{'t22': {'ADDRESS': '192.168.1.100', 'PORT': 6022, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a2_t22', 'LAST': 1708333264.903284}}
+trusted_auth_table:
+{'a1': {'ADDRESS': '192.168.1.100', 'PORT': 5001}, 'a3': {'ADDRESS': '192.168.1.100', 'PORT': 5003}}
+trusted_auth_things:
+{'a1': ['t13']}
+10:01,374 DEBUG Try to send message to 192.168.1.100:5001
+10:01,374 INFO Sent AUTH_UPDATE:
+{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'AUTH_ID': 'a2', 'A_NONCE': "b'x\\xc2'", 'UPDATE': ['t22']}
+to 192.168.1.100:5001
+10:01,374 DEBUG Try to send message to 192.168.1.100:5003
+10:01,374 INFO Sent AUTH_UPDATE:
+{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'AUTH_ID': 'a2', 'A_NONCE': "b'\\x06\\x1c'", 'UPDATE': ['t22']}
+to 192.168.1.100:5003
+10:01,396 INFO Received AUTH_UPDATE
+message: {'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xdee'", 'UPDATE': ['t13']} from 192.168.1.100:5001
+10:01,396 DEBUG {'a1': ['t13']}
+10:01,396 DEBUG {'a1': ['t13']}
+10:01,904 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't22', 'ADDRESS': '192.168.1.100', 'PORT': 6022} from 192.168.1.100:6022
+10:01,907 DEBUG Try to send message to 192.168.1.100:6022
+10:01,907 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a2', 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'A_NONCE': "b'\\xb4a'"}
+to 192.168.1.100:6022
+10:01,908 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't22', 'ADDRESS': '192.168.1.100', 'PORT': 6022} from 192.168.1.100:6022
+10:01,908 DEBUG Try to send message to 192.168.1.100:6022
+10:01,908 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a2', 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'A_NONCE': "b'\\xd5\\x93'"}
+to 192.168.1.100:6022
+10:01,909 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't22', 'ADDRESS': '192.168.1.100', 'PORT': 6022} from 192.168.1.100:6022
+10:01,909 DEBUG Try to send message to 192.168.1.100:6022
+10:01,910 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a2', 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'A_NONCE': "b'\\xf4\\xa3'"}
+to 192.168.1.100:6022

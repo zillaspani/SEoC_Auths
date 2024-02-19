@@ -346,6 +346,8 @@ class Auth:
                 message={
                     "MESSAGE_TYPE": 6,
                     "AUTH_ID": self.hostname,
+                    "ADDRESS": self.ip,
+                    "PORT": self.port,
                     "A_NONCE": str(os.urandom(2)),
                     "FROM": sender_thing
                 }
@@ -359,9 +361,15 @@ class Auth:
         try:
             if not self.check_nonce(message,address):
                 pass
+            timestamp = time.time()
+            self.lock.acquire()
+            self.registered_entity_table[message['THING_ID']]['LAST'] = timestamp
+            self.lock.release()
             session_key_response={
                 "MESSAGE_TYPE": 5,
                 "AUTH_ID": self.hostname,
+                "ADDRESS": self.ip,
+                "PORT": self.port,
                 "A_NONCE": str(os.urandom(2))
             }
 
@@ -438,6 +446,10 @@ class Auth:
 
     def update_request(self,message):
         try:
+            timestamp = time.time()
+            self.lock.acquire()
+            self.registered_entity_table[message['THING_ID']]['LAST'] = timestamp
+            self.lock.release()
             response={
             "MESSAGE_TYPE": 10,
             "AUTH_ID": self.hostname,
@@ -452,7 +464,6 @@ class Auth:
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during update_request handling")
-
 
     def send(self,receiver_ip,receiver_port,message):
         try:
@@ -487,7 +498,6 @@ class Auth:
         else:
             logging.error("Message type was not recognized")
 
-
     def listenT(self):
         while True:
             data, address = self.socket.recvfrom(1024)
@@ -503,7 +513,7 @@ class Auth:
             for thing in self.registered_entity_table:
                 delta=now-self.registered_entity_table[thing]['LAST']
                 logging.debug(f"Delfa of {thing} is {delta}")
-                if delta > 10:
+                if delta > 30:
                     to_delete.append(thing)
 
             for thing in to_delete:

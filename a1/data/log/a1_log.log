@@ -1,806 +1,107 @@
-17:15,156 DEBUG Available resources: 3/9
-registered_entity_table:
-{'t11': {'ADDRESS': '192.168.1.100', 'PORT': 6011, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t11'}, 't12': {'ADDRESS': '192.168.1.100', 'PORT': 6012, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t12'}}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:15,156 DEBUG a1 Start Listening on 192.168.1.100:5001
-17:15,864 INFO Received AUTH_SESSION_KEYS
-message: {'MESSAGE_TYPE': 6, 'ADDRESS': 'test', 'PORT': 1, 'AUTH_ID': 'a2', 'A_NONCE': 'b\'\\n<\\x94\\xec8\\xa8\\x17\\xdf\\xfd"\'', 'FROM': 't9', 'SESSION_KEYS': {'t2': 'S_K_t9_t2', 't3': 'S_K_t9_t3'}} from test:1
-17:15,864 INFO {'t2': {'t9': 'S_K_t9_t2'}, 't3': {'t9': 'S_K_t9_t3'}}
-17:15,867 INFO Received AUTH_SESSION_KEYS
-message: {'MESSAGE_TYPE': 6, 'ADDRESS': 'test', 'PORT': 1, 'AUTH_ID': 'a2', 'A_NONCE': 'b\'\\n<\\x94\\xec8\\xa8\\x17\\xdf\\xfd"\'', 'FROM': 't10', 'SESSION_KEYS': {'t2': 'S_K_t10_t2', 't5': 'S_K_t10_t5'}} from test:1
-17:15,867 INFO {'t2': {'t9': 'S_K_t9_t2', 't10': 'S_K_t10_t2'}, 't3': {'t9': 'S_K_t9_t3'}, 't5': {'t10': 'S_K_t10_t5'}}
-17:15,870 INFO Received UPDATE_REQUEST
-message: {'MESSAGE_TYPE': 9, 'THING_ID': 't1', 'ADDRESS': '192.168.1.100', 'PORT': 6666, 'T_NONCE': '{thing_nonce}'} from 192.168.1.100:6666
-17:15,870 DEBUG Try to send message to 192.168.1.100:6666
-17:15,871 INFO Sent UPDATE_KEYS:
-{'MESSAGE_TYPE': 10, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b']!'", 'SESSION_KEYS': {}}
-to 192.168.1.100:6666
-17:15,157 DEBUG Delfa of t11 is 30.00008487701416
-17:15,157 DEBUG Delfa of t12 is 30.000083446502686
-17:15,157 INFO Deleted Thing {'ADDRESS': '192.168.1.100', 'PORT': 6011, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t11', 'LAST': 1708190125.1573336}
-17:15,157 INFO {'t12': {'ADDRESS': '192.168.1.100', 'PORT': 6012, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t12', 'LAST': 1708190125.157335}}
-17:15,157 INFO Deleted Thing {'ADDRESS': '192.168.1.100', 'PORT': 6012, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t12', 'LAST': 1708190125.157335}
-17:15,158 INFO {}
-17:15,158 INFO Available resources: 9/9
+10:00,394 DEBUG Available resources: 9/9
 registered_entity_table:
 {}
 trusted_auth_table:
 {'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
 trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:15,158 DEBUG Working
-17:15,158 DEBUG Try to send message to 192.168.1.100:5002
-17:15,158 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x90\\xe9'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:16,509 INFO Received AUTH_SESSION_KEYS
-message: {'MESSAGE_TYPE': 6, 'ADDRESS': 'test', 'PORT': 1, 'AUTH_ID': 'a2', 'A_NONCE': 'b\'\\n<\\x94\\xec8\\xa8\\x17\\xdf\\xfd"\'', 'FROM': 't9', 'SESSION_KEYS': {'t2': 'S_K_t9_t2', 't3': 'S_K_t9_t3'}} from test:1
-17:16,509 INFO {'t2': {'t9': 'S_K_t9_t2', 't10': 'S_K_t10_t2'}, 't3': {'t9': 'S_K_t9_t3'}, 't5': {'t10': 'S_K_t10_t5'}}
-17:16,512 INFO Received AUTH_SESSION_KEYS
-message: {'MESSAGE_TYPE': 6, 'ADDRESS': 'test', 'PORT': 1, 'AUTH_ID': 'a2', 'A_NONCE': 'b\'\\n<\\x94\\xec8\\xa8\\x17\\xdf\\xfd"\'', 'FROM': 't10', 'SESSION_KEYS': {'t2': 'S_K_t10_t2', 't5': 'S_K_t10_t5'}} from test:1
-17:16,512 INFO {'t2': {'t9': 'S_K_t9_t2', 't10': 'S_K_t10_t2'}, 't3': {'t9': 'S_K_t9_t3'}, 't5': {'t10': 'S_K_t10_t5'}}
-17:16,515 INFO Received UPDATE_REQUEST
-message: {'MESSAGE_TYPE': 9, 'THING_ID': 't2', 'ADDRESS': '192.168.1.100', 'PORT': 6666, 'T_NONCE': '{thing_nonce}'} from 192.168.1.100:6666
-17:16,515 DEBUG Try to send message to 192.168.1.100:6666
-17:16,515 INFO Sent UPDATE_KEYS:
-{'MESSAGE_TYPE': 10, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\xae$'", 'SESSION_KEYS': {'t9': 'S_K_t9_t2', 't10': 'S_K_t10_t2'}}
-to 192.168.1.100:6666
-17:16,158 DEBUG Working
-17:16,158 INFO Available resources: 9/9
-registered_entity_table:
 {}
+10:00,394 DEBUG a1 Start Listening on 192.168.1.100:5001
+10:00,887 INFO Received REGISTER_TO_AUTH
+message: {'MESSAGE_TYPE': 0, 'THING_ID': 't13', 'ADDRESS': '192.168.1.100', 'PORT': 6013, 'SEC_REQ': 3, 'THING_SIGNATURE': 'E[(THING_ID | ADDRESS | PORT | SEC_REQ),thing private key]'} from 192.168.1.100:6013
+10:00,888 DEBUG Thing aggiunta:
+{'ADDRESS': '192.168.1.100', 'PORT': 6013, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t13', 'LAST': 1708333239.8880358}
+10:00,888 INFO Nuova thing aggiunta
+10:00,888 DEBUG Try to send message to 192.168.1.100:6013
+10:00,888 INFO Sent REGISTER_RESPONSE:
+{'MESSAGE_TYPE': 1, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\xb5\\xf6'", 'ACCEPTED': 1, 'SUGGESTED_AUTH': {'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}, 'SESSION_KEY': 'S_K_a1_t13'}
+to 192.168.1.100:6013
+10:00,888 DEBUG Try to send message to 192.168.1.100:5002
+10:00,888 INFO Sent AUTH_UPDATE:
+{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'K\\x8b'", 'UPDATE': ['t13']}
+to 192.168.1.100:5002
+10:00,888 DEBUG Available resources: 6/9
+registered_entity_table:
+{'t13': {'ADDRESS': '192.168.1.100', 'PORT': 6013, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t13', 'LAST': 1708333239.8880358}}
 trusted_auth_table:
 {'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
 trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:16,158 DEBUG Try to send message to 192.168.1.100:5002
-17:16,159 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'Uu'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:16,132 INFO Received UPDATE_REQUEST
-message: {'MESSAGE_TYPE': 9, 'THING_ID': 't2', 'ADDRESS': '192.168.1.100', 'PORT': 6666, 'T_NONCE': '{thing_nonce}'} from 192.168.1.100:6666
-17:16,132 DEBUG Try to send message to 192.168.1.100:6666
-17:16,133 INFO Sent UPDATE_KEYS:
-{'MESSAGE_TYPE': 10, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'&:'", 'SESSION_KEYS': {}}
-to 192.168.1.100:6666
-17:16,158 DEBUG Working
-17:16,159 INFO Available resources: 9/9
-registered_entity_table:
 {}
+10:00,894 INFO Received AUTH_UPDATE
+message: {'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'AUTH_ID': 'a2', 'A_NONCE': "b'z\\xf1'", 'UPDATE': ['t22']} from 192.168.1.100:5002
+10:00,894 DEBUG {}
+10:00,894 DEBUG {'a2': ['t22']}
+10:00,889 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't13', 'ADDRESS': '192.168.1.100', 'PORT': 6013} from 192.168.1.100:6013
+10:00,892 DEBUG Try to send message to 192.168.1.100:6013
+10:00,893 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\x84a'"}
+to 192.168.1.100:6013
+10:00,894 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't13', 'ADDRESS': '192.168.1.100', 'PORT': 6013} from 192.168.1.100:6013
+10:00,897 DEBUG Try to send message to 192.168.1.100:6013
+10:00,897 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\x91}'"}
+to 192.168.1.100:6013
+10:00,897 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't13', 'ADDRESS': '192.168.1.100', 'PORT': 6013} from 192.168.1.100:6013
+10:00,900 DEBUG Try to send message to 192.168.1.100:6013
+10:00,900 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\x12\\x7f'"}
+to 192.168.1.100:6013
+10:00,901 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't13', 'ADDRESS': '192.168.1.100', 'PORT': 6013} from 192.168.1.100:6013
+10:00,901 DEBUG Try to send message to 192.168.1.100:6013
+10:00,902 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\x90B'"}
+to 192.168.1.100:6013
+10:00,902 INFO Received SESSION_KEY_REQUEST
+message: {'MESSAGE_TYPE': 4, 'THING_ID': 't13', 'ADDRESS': '192.168.1.100', 'PORT': 6013, 'A_NONCE': "b'\\x90B'", 'T_NONCE': "b'\\xfcs'", 'WHO': ['t22']} from 192.168.1.100:6013
+10:00,902 DEBUG Try to send message to 192.168.1.100:5002
+10:00,902 INFO Sent AUTH_SESSION_KEYS:
+{'MESSAGE_TYPE': 6, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'*\\xb8'", 'FROM': 't13', 'SESSION_KEYS': {'t22': 'S_K_t13_t22'}}
+to 192.168.1.100:5002
+10:00,902 DEBUG Try to send message to 192.168.1.100:6013
+10:00,903 INFO Sent SESSION_KEY_RESPONSE:
+{'MESSAGE_TYPE': 5, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\x02\\xbf'", 'SESSION_KEY': {'t22': 'S_K_t13_t22'}}
+to 192.168.1.100:6013
+10:01,904 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't13', 'ADDRESS': '192.168.1.100', 'PORT': 6013} from 192.168.1.100:6013
+10:01,904 DEBUG Try to send message to 192.168.1.100:6013
+10:01,904 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\xe0B'"}
+to 192.168.1.100:6013
+10:01,374 INFO Received AUTH_UPDATE
+message: {'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5002, 'AUTH_ID': 'a2', 'A_NONCE': "b'x\\xc2'", 'UPDATE': ['t22']} from 192.168.1.100:5002
+10:01,374 DEBUG {'a2': ['t22']}
+10:01,374 DEBUG {'a2': ['t22']}
+10:01,395 DEBUG Working
+10:01,395 DEBUG Delfa of t13 is 0.4914848804473877
+10:01,396 INFO Available resources: 6/9
+registered_entity_table:
+{'t13': {'ADDRESS': '192.168.1.100', 'PORT': 6013, 'SEC_REQ': 3, 'SESSION_KEY': 'S_K_a1_t13', 'LAST': 1708333264.9041715}}
 trusted_auth_table:
 {'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
 trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:16,159 DEBUG Try to send message to 192.168.1.100:5002
-17:16,159 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x84\\xd8'", 'UPDATE': []}
+{'a2': ['t22']}
+10:01,396 DEBUG Try to send message to 192.168.1.100:5002
+10:01,396 INFO Sent AUTH_UPDATE:
+{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xdee'", 'UPDATE': ['t13']}
 to 192.168.1.100:5002
-17:17,158 DEBUG Working
-17:17,159 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:17,159 DEBUG Try to send message to 192.168.1.100:5002
-17:17,160 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'xM'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:17,912 INFO Received UPDATE_REQUEST
-message: {'MESSAGE_TYPE': 9, 'THING_ID': 't3', 'ADDRESS': '192.168.1.100', 'PORT': 6666, 'T_NONCE': '{thing_nonce}'} from 192.168.1.100:6666
-17:17,912 DEBUG Try to send message to 192.168.1.100:6666
-17:17,912 INFO Sent UPDATE_KEYS:
-{'MESSAGE_TYPE': 10, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'8a'", 'SESSION_KEYS': {'t9': 'S_K_t9_t3'}}
-to 192.168.1.100:6666
-17:17,156 INFO Received UPDATE_REQUEST
-message: {'MESSAGE_TYPE': 9, 'THING_ID': 't3', 'ADDRESS': '192.168.1.100', 'PORT': 6666, 'T_NONCE': '{thing_nonce}'} from 192.168.1.100:6666
-17:17,156 DEBUG Try to send message to 192.168.1.100:6666
-17:17,157 INFO Sent UPDATE_KEYS:
-{'MESSAGE_TYPE': 10, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\x96 '", 'SESSION_KEYS': {}}
-to 192.168.1.100:6666
-17:17,159 DEBUG Working
-17:17,160 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:17,160 DEBUG Try to send message to 192.168.1.100:5002
-17:17,160 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xf7\\x8e'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:18,248 INFO Received AUTH_SESSION_KEYS
-message: {'MESSAGE_TYPE': 6, 'ADDRESS': 'test', 'PORT': 1, 'AUTH_ID': 'a2', 'A_NONCE': 'b\'\\n<\\x94\\xec8\\xa8\\x17\\xdf\\xfd"\'', 'FROM': 't9', 'SESSION_KEYS': {'t2': 'S_K_t9_t2', 't3': 'S_K_t9_t3'}} from test:1
-17:18,249 INFO {'t5': {'t10': 'S_K_t10_t5'}, 't2': {'t9': 'S_K_t9_t2'}, 't3': {'t9': 'S_K_t9_t3'}}
-17:18,250 INFO Received UPDATE_REQUEST
-message: {'MESSAGE_TYPE': 9, 'THING_ID': 't3', 'ADDRESS': '192.168.1.100', 'PORT': 6666, 'T_NONCE': '{thing_nonce}'} from 192.168.1.100:6666
-17:18,250 DEBUG Try to send message to 192.168.1.100:6666
-17:18,250 INFO Sent UPDATE_KEYS:
-{'MESSAGE_TYPE': 10, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\xd46'", 'SESSION_KEYS': {'t9': 'S_K_t9_t3'}}
-to 192.168.1.100:6666
-17:18,400 INFO Received AUTH_SESSION_KEYS
-message: {'MESSAGE_TYPE': 6, 'ADDRESS': 'test', 'PORT': 1, 'AUTH_ID': 'a2', 'A_NONCE': 'b\'\\n<\\x94\\xec8\\xa8\\x17\\xdf\\xfd"\'', 'FROM': 't9', 'SESSION_KEYS': {'t2': 'S_K_t9_t2', 't3': 'S_K_t9_t3'}} from test:1
-17:18,400 INFO {'t5': {'t10': 'S_K_t10_t5'}, 't2': {'t9': 'S_K_t9_t2'}, 't3': {'t9': 'S_K_t9_t3'}}
-17:18,402 INFO Received UPDATE_REQUEST
-message: {'MESSAGE_TYPE': 9, 'THING_ID': 't3', 'ADDRESS': '192.168.1.100', 'PORT': 6666, 'T_NONCE': '{thing_nonce}'} from 192.168.1.100:6666
-17:18,402 DEBUG Try to send message to 192.168.1.100:6666
-17:18,402 INFO Sent UPDATE_KEYS:
-{'MESSAGE_TYPE': 10, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\x0e\\xbc'", 'SESSION_KEYS': {'t9': 'S_K_t9_t3'}}
-to 192.168.1.100:6666
-17:18,159 DEBUG Working
-17:18,160 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:18,160 DEBUG Try to send message to 192.168.1.100:5002
-17:18,160 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x96\\xc0'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:18,159 DEBUG Working
-17:18,161 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:18,161 DEBUG Try to send message to 192.168.1.100:5002
-17:18,161 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'V8'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:19,159 DEBUG Working
-17:19,161 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:19,161 DEBUG Try to send message to 192.168.1.100:5002
-17:19,162 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xe7J'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:19,160 DEBUG Working
-17:19,162 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:19,162 DEBUG Try to send message to 192.168.1.100:5002
-17:19,162 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xa1\\x9a'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:20,160 DEBUG Working
-17:20,162 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:20,162 DEBUG Try to send message to 192.168.1.100:5002
-17:20,163 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x01A'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:20,160 DEBUG Working
-17:20,163 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:20,163 DEBUG Try to send message to 192.168.1.100:5002
-17:20,163 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'i\\x9e'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:21,160 DEBUG Working
-17:21,163 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:21,164 DEBUG Try to send message to 192.168.1.100:5002
-17:21,164 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'6\\xf9'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:21,161 DEBUG Working
-17:21,164 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:21,164 DEBUG Try to send message to 192.168.1.100:5002
-17:21,164 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xf8\\x92'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:22,161 DEBUG Working
-17:22,165 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:22,165 DEBUG Try to send message to 192.168.1.100:5002
-17:22,165 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'[\\xd1'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:22,161 DEBUG Working
-17:22,165 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:22,165 DEBUG Try to send message to 192.168.1.100:5002
-17:22,165 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'J\\xcb'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:23,161 DEBUG Working
-17:23,166 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:23,166 DEBUG Try to send message to 192.168.1.100:5002
-17:23,166 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x90#'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:23,162 DEBUG Working
-17:23,166 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:23,166 DEBUG Try to send message to 192.168.1.100:5002
-17:23,167 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'=\\x82'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:24,162 DEBUG Working
-17:24,167 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:24,167 DEBUG Try to send message to 192.168.1.100:5002
-17:24,167 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'7\\xb8'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:24,162 DEBUG Working
-17:24,167 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:24,167 DEBUG Try to send message to 192.168.1.100:5002
-17:24,168 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x97\\xeb'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:25,162 DEBUG Working
-17:25,168 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:25,168 DEBUG Try to send message to 192.168.1.100:5002
-17:25,168 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xe0\\x83'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:25,162 DEBUG Working
-17:25,168 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:25,168 DEBUG Try to send message to 192.168.1.100:5002
-17:25,169 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'#Q'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:26,163 DEBUG Working
-17:26,169 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:26,169 DEBUG Try to send message to 192.168.1.100:5002
-17:26,169 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'q\\x10'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:26,163 DEBUG Working
-17:26,169 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:26,170 DEBUG Try to send message to 192.168.1.100:5002
-17:26,170 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xbf\\n'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:27,163 DEBUG Working
-17:27,170 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:27,170 DEBUG Try to send message to 192.168.1.100:5002
-17:27,170 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xa1\\xc2'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:27,163 DEBUG Working
-17:27,171 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:27,171 DEBUG Try to send message to 192.168.1.100:5002
-17:27,171 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'E\\xac'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:28,164 DEBUG Working
-17:28,171 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:28,171 DEBUG Try to send message to 192.168.1.100:5002
-17:28,171 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'i\\x1a'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:28,164 DEBUG Working
-17:28,172 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:28,172 DEBUG Try to send message to 192.168.1.100:5002
-17:28,172 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xef\\xf1'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:29,164 DEBUG Working
-17:29,172 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:29,172 DEBUG Try to send message to 192.168.1.100:5002
-17:29,173 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xce9'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:29,164 DEBUG Working
-17:29,173 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:29,173 DEBUG Try to send message to 192.168.1.100:5002
-17:29,173 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'E\\xd4'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:30,165 DEBUG Working
-17:30,173 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:30,174 DEBUG Try to send message to 192.168.1.100:5002
-17:30,174 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': 'b\'9"\'', 'UPDATE': []}
-to 192.168.1.100:5002
-17:30,165 DEBUG Working
-17:30,174 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:30,174 DEBUG Try to send message to 192.168.1.100:5002
-17:30,174 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xf7I'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:31,165 DEBUG Working
-17:31,175 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:31,175 DEBUG Try to send message to 192.168.1.100:5002
-17:31,175 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'V\\x82'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:31,165 DEBUG Working
-17:31,175 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:31,175 DEBUG Try to send message to 192.168.1.100:5002
-17:31,176 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xaa\\xd6'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:32,166 DEBUG Working
-17:32,176 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:32,176 DEBUG Try to send message to 192.168.1.100:5002
-17:32,176 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'.\\xcd'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:32,166 DEBUG Working
-17:32,176 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:32,177 DEBUG Try to send message to 192.168.1.100:5002
-17:32,177 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'6Q'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:33,166 DEBUG Working
-17:33,177 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:33,177 DEBUG Try to send message to 192.168.1.100:5002
-17:33,177 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x8c\\xcd'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:33,166 DEBUG Working
-17:33,178 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:33,178 DEBUG Try to send message to 192.168.1.100:5002
-17:33,178 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x80^'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:34,167 DEBUG Working
-17:34,178 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:34,178 DEBUG Try to send message to 192.168.1.100:5002
-17:34,178 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'B\\xc8'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:34,167 DEBUG Working
-17:34,179 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:34,179 DEBUG Try to send message to 192.168.1.100:5002
-17:34,179 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x9e\\x89'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:35,167 DEBUG Working
-17:35,179 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:35,179 DEBUG Try to send message to 192.168.1.100:5002
-17:35,180 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x1c\\x81'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:35,167 DEBUG Working
-17:35,180 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:35,180 DEBUG Try to send message to 192.168.1.100:5002
-17:35,180 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xa1?'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:36,168 DEBUG Working
-17:36,181 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:36,181 DEBUG Try to send message to 192.168.1.100:5002
-17:36,181 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'a\\xc8'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:36,168 DEBUG Working
-17:36,181 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:36,181 DEBUG Try to send message to 192.168.1.100:5002
-17:36,182 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x9d\\xd4'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:37,168 DEBUG Working
-17:37,182 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:37,182 DEBUG Try to send message to 192.168.1.100:5002
-17:37,182 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'_\\x9c'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:37,168 DEBUG Working
-17:37,182 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:37,183 DEBUG Try to send message to 192.168.1.100:5002
-17:37,183 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x90\\xff'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:38,168 DEBUG Working
-17:38,183 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:38,183 DEBUG Try to send message to 192.168.1.100:5002
-17:38,184 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xa5_'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:38,169 DEBUG Working
-17:38,184 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:38,184 DEBUG Try to send message to 192.168.1.100:5002
-17:38,184 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x94j'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:39,169 DEBUG Working
-17:39,185 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:39,185 DEBUG Try to send message to 192.168.1.100:5002
-17:39,185 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'n\\x16'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:39,169 DEBUG Working
-17:39,185 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:39,185 DEBUG Try to send message to 192.168.1.100:5002
-17:39,185 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xa1\\xe5'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:40,169 DEBUG Working
-17:40,186 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:40,186 DEBUG Try to send message to 192.168.1.100:5002
-17:40,186 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x93\\xf1'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:40,170 DEBUG Working
-17:40,186 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:40,187 DEBUG Try to send message to 192.168.1.100:5002
-17:40,187 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'~\\xaa'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:41,170 DEBUG Working
-17:41,187 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:41,187 DEBUG Try to send message to 192.168.1.100:5002
-17:41,188 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x06f'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:41,170 DEBUG Working
-17:41,188 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:41,188 DEBUG Try to send message to 192.168.1.100:5002
-17:41,188 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'I\\x18'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:42,170 DEBUG Working
-17:42,189 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:42,189 DEBUG Try to send message to 192.168.1.100:5002
-17:42,189 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xc7 '", 'UPDATE': []}
-to 192.168.1.100:5002
-17:42,171 DEBUG Working
-17:42,189 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:42,189 DEBUG Try to send message to 192.168.1.100:5002
-17:42,189 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'!b'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:43,171 DEBUG Working
-17:43,190 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:43,190 DEBUG Try to send message to 192.168.1.100:5002
-17:43,190 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xae\\x9d'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:43,171 DEBUG Working
-17:43,190 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:43,190 DEBUG Try to send message to 192.168.1.100:5002
-17:43,191 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x1c\\xe9'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:44,171 DEBUG Working
-17:44,191 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:44,191 DEBUG Try to send message to 192.168.1.100:5002
-17:44,191 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\x0f_'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:44,172 DEBUG Working
-17:44,191 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:44,192 DEBUG Try to send message to 192.168.1.100:5002
-17:44,192 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'+\\xd7'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:45,172 DEBUG Working
-17:45,192 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:45,192 DEBUG Try to send message to 192.168.1.100:5002
-17:45,192 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'#\\x1b'", 'UPDATE': []}
-to 192.168.1.100:5002
-17:45,172 DEBUG Working
-17:45,192 INFO Available resources: 9/9
-registered_entity_table:
-{}
-trusted_auth_table:
-{'a2': {'ADDRESS': '192.168.1.100', 'PORT': 5002}}
-trusted_auth_things:
-{'a2': ['t21', 't22']}
-17:45,193 DEBUG Try to send message to 192.168.1.100:5002
-17:45,193 INFO Sent AUTH_UPDATE:
-{'MESSAGE_TYPE': 8, 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'AUTH_ID': 'a1', 'A_NONCE': "b'\\xf8('", 'UPDATE': []}
-to 192.168.1.100:5002
+10:01,907 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't13', 'ADDRESS': '192.168.1.100', 'PORT': 6013} from 192.168.1.100:6013
+10:01,907 DEBUG Try to send message to 192.168.1.100:6013
+10:01,907 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\xc2\\xed'"}
+to 192.168.1.100:6013
+10:01,908 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't13', 'ADDRESS': '192.168.1.100', 'PORT': 6013} from 192.168.1.100:6013
+10:01,908 DEBUG Try to send message to 192.168.1.100:6013
+10:01,908 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'JU'"}
+to 192.168.1.100:6013
+10:01,909 INFO Received CONNECT_TO_AUTH
+message: {'MESSAGE_TYPE': 2, 'THING_ID': 't13', 'ADDRESS': '192.168.1.100', 'PORT': 6013} from 192.168.1.100:6013
+10:01,909 DEBUG Try to send message to 192.168.1.100:6013
+10:01,909 INFO Sent AUTH_HELLO:
+{'MESSAGE_TYPE': 3, 'AUTH_ID': 'a1', 'ADDRESS': '192.168.1.100', 'PORT': 5001, 'A_NONCE': "b'\\xb5\\x9b'"}
+to 192.168.1.100:6013

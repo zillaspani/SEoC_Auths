@@ -9,6 +9,8 @@ services:
       context: ./a1/
     volumes:
       - $PWD/a1/data:/app/data
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
   a2:
     container_name: a2
     hostname: a2
@@ -17,6 +19,8 @@ services:
       context: ./a2/
     volumes:
       - $PWD/a2/data:/app/data
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
   a3:
     container_name: a3
     hostname: a3
@@ -25,3 +29,5 @@ services:
       context: ./a3/
     volumes:
       - $PWD/a3/data:/app/data
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
