@@ -12,13 +12,17 @@
     "trusted_auth_table":{
       "a1":{
         "ADDRESS":"192.168.1.100",
-        "PORT": 5001
+        "PORT": 5001,
+        "TRUST": 0.5
       },
       "a3":{
         "ADDRESS":"192.168.1.100",
-        "PORT": 5003
+        "PORT": 5003,
+        "TRUST": 0.6
       }
     },
     "trusted_auth_things":{
+      "a1":["13"],
+      "a3":["t31","t32"]
     }
 }

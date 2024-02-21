@@ -12,9 +12,11 @@
     "trusted_auth_table":{
       "a2":{
         "ADDRESS":"192.168.1.100",
-        "PORT": 5002
+        "PORT": 5002,
+        "TRUST": 0.51
       }
     },
     "trusted_auth_things":{
+      "a2":["t22"]
     }
 }

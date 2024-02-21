@@ -6,7 +6,6 @@ import threading
 import time
 
 class Auth:
-
     registered_entity_table={}
     trusted_auth_table={}
     trusted_auth_things={}
@@ -70,6 +69,10 @@ class Auth:
             return "UPDATE_KEYS"
         elif type == 11:
             return "START"
+        elif type == 15:
+            return "TRUST_RECOMENDATION_REQUEST"
+        elif type == 16:
+            return "TRUST_RECOMENDATION_RESPONSE"
         else:
             return "Unknown message type"
 
@@ -465,6 +468,30 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during update_request handling")
 
+    def trust_recomendation_request(self, message):
+        try:
+            response={
+                "MESSAGE_TYPE": 16,
+                "AUTH_ID": self.hostname,
+                "ADDRESS": self.ip,
+                "PORT": self.port,
+                "A_NONCE": str(os.urandom(2))
+            }
+            for t_auth in self.trusted_auth_things:
+                if message['RECEIVER'] in self.trusted_auth_things[t_auth]:
+                    response['RECOMENDATION']=self.trusted_auth_table[t_auth]['TRUST']
+                    self.send(message['ADDRESS'],message['PORT'],response)
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during trust_recomendation_request handling")
+
+    def trust_recomendation_response(self, message):
+        try:
+            logging.info(message)
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during trust_recomendation_response handling")
+
     def send(self,receiver_ip,receiver_port,message):
         try:
             logging.debug(f"Try to send message to {receiver_ip}:{receiver_port}")
@@ -495,6 +522,10 @@ class Auth:
             self.auth_update(plain_message,address)
         elif plain_message['MESSAGE_TYPE']==9:
             self.update_request(plain_message)
+        elif plain_message['MESSAGE_TYPE']==15:
+            self.trust_recomendation_request(plain_message)
+        elif plain_message['MESSAGE_TYPE']==16:
+            self.trust_recomendation_response(plain_message)
         else:
             logging.error("Message type was not recognized")
 
@@ -526,7 +557,6 @@ class Auth:
             logging.info(self.auth_status())
             self.send_auth_update()
 
-
     def start_listening(self):
         logging.debug(f"{self.hostname} Start Listening on {self.ip}:{self.port}")
         listening_thread = threading.Thread(target=self.listenT, daemon= True)
@@ -542,7 +572,6 @@ class Auth:
             logging.error(f"Error during template handling")
 
 if __name__ == "__main__":
-
     auth = Auth()
     auth.start_listening()    
 
