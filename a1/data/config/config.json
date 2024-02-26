@@ -3,8 +3,9 @@
   "IP":"192.168.1.100",
   "UDP_PORT":5001,
   "SEC_LEV":3,
-  "RESOURCE":6,  
-  
+  "RESOURCE":6,
+  "REQUEST_ACCEPTED": 50,
+  "TOTAL_REQUEST": 50,
   "registered_entity_table": {
     },
     "COMMUNICATION_POLICY_TABLE":{},
@@ -13,10 +14,14 @@
       "a2":{
         "ADDRESS":"192.168.1.100",
         "PORT": 5002,
-        "TRUST": 0.51
+        "SEC_LEV":[],
+        "A_REQUEST":[],
+        "T_REQUEST":[],
+        "TRUST": [],
+        "RESOURCE": []
       }
     },
     "trusted_auth_things":{
-      "a2":["t22"]
+      "a2":[]
     }
 }

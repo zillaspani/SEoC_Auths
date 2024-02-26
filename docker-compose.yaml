@@ -31,3 +31,13 @@ services:
       - $PWD/a3/data:/app/data
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
+  logger:
+    container_name: logger
+    hostname: logger
+    network_mode: "host"
+    build: 
+      context: ./logger/
+    volumes:
+      - $PWD/logger/data:/app/data
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"

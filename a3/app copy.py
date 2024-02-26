@@ -271,6 +271,7 @@ class Auth:
             self.trusted_auth_table[auth]['A_REQUEST'].append(message['A_REQUEST'])
             self.trusted_auth_table[auth]['T_REQUEST'].append(message['T_REQUEST'])
             self.eval_trust(auth)
+            logging.info("PINO")
             self.trusted_auth_table[auth]['RESOURCE'].append(message['RESOURCE'])
             self.trusted_auth_table[auth]['SEC_LEV'].append(message['SEC_LEV'])
             self.trusted_auth_table[auth]['NEIGHBORS']=message['NEIGHBORS']
@@ -312,7 +313,7 @@ class Auth:
         '''
         Given two parametes, it will return a key
         '''
-        return f"S_K_by_{self.hostname}_{par1}_{par2}"
+        return f"S_K_{par1}_{par2}"
     
     def add_thing(self,message):
         try:
@@ -352,10 +353,6 @@ class Auth:
                 self.send_register_response(message,address,0)
             else:
                 self.send_register_response(message,address,1)
-                to_delete_from_auth=self.get_auth(message['THING_ID'])
-                if to_delete_from_auth is not None:
-                    self.trusted_auth_things[to_delete_from_auth].remove(message['THINK_ID']) #Elimino dalla lista dei vicini  
-
             logging.debug(self.auth_status())
         except Exception as ex:
             logging.error(ex)
@@ -430,7 +427,7 @@ class Auth:
         '''
         try:
             if thing in self.registered_entity_table:
-                return True,2
+                return True,0
 
             auth=self.get_auth(thing)
             if auth is not None:
@@ -441,7 +438,7 @@ class Auth:
                 if t_auth is not None and self.make_trust(t_auth,n_auth):
                     return True,1
 
-            return False,-1     
+            return False     
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during evaluate_auth_trustness handling")
@@ -450,20 +447,17 @@ class Auth:
         try:
             SESSION_KEYS={}
             FORWARD_SESSION_KEYS={}
-            TO_STORE={}
             for thing in message['WHO']:
                 result,forward=self.evaluate_auth_trustness(thing)
                 if result:
                     if forward==0:
                         SESSION_KEYS[thing]=self.gen_key(message['THING_ID'],thing)
-                    if forward==2:
-                        TO_STORE[thing]=self.gen_key(message['THING_ID'],thing)
-                    if forward==1:
+                    else:
                         FORWARD_SESSION_KEYS[thing]=self.gen_key(message['THING_ID'],thing)
             
             self.total_request+=len(message['WHO'])
             self.request_accepted+=len(SESSION_KEYS)+len(FORWARD_SESSION_KEYS)
-            return SESSION_KEYS,FORWARD_SESSION_KEYS,TO_STORE
+            return SESSION_KEYS,FORWARD_SESSION_KEYS
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during get_session_key handling, with {address}")
@@ -585,21 +579,20 @@ class Auth:
                 "A_NONCE": str(os.urandom(2))
             }
 
-            session_keys,forward_session_key,to_store=self.get_session_key(message,address) 
-            logging.info(f"Session key={session_keys} forw_session key={forward_session_key} to_store={to_store}")
+            session_keys,forward_session_key=self.get_session_key(message,address)
+            logging.info(f"Session key={session_keys} forw_session key={forward_session_key}")
             merged_keys=session_keys.copy()
             merged_keys.update(forward_session_key)
-            merged_keys.update(to_store)
+            logging.info(f"Session key={session_keys} forw_session key={forward_session_key}")
             logging.info(f"merged_session key={merged_keys}")
-            session_key_response['SESSION_KEY']=merged_keys #da inviare dalla thing che ha richiesto
-            if to_store!={}:
-                self.add_pending_key(message['THING_ID'],to_store) #La comunicazione avviene tra things afferenti alla stessa auth
+
+            session_key_response['SESSION_KEY']=merged_keys
             if session_keys != {}:
-                self.send_auth_session_key(session_keys,message['THING_ID']) #Inoltro la chiavi all'auth trusted 
+                self.send_auth_session_key(session_keys,message['THING_ID']) #Inoltro la chiave 
             if forward_session_key != {}:
-                self.forward_auth_session_key(forward_session_key,message['THING_ID']) #Inoltro l'eventuale chiave alla trusted auth derivata 
+                self.forward_auth_session_key(forward_session_key,message['THING_ID']) #Inoltro l'eventuale chiave al trusted derivata 
             address=self.get_thing_address(message['THING_ID'])
-            self.send(address['ADDRESS'],address['PORT'],session_key_response) #Invio la lista merged alla thinhs
+            self.send(address['ADDRESS'],address['PORT'],session_key_response) #Invio la lista merged
 
 
 
@@ -607,21 +600,6 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during session_key_request handling, with {address}")
 
-    def add_pending_key(self,thing_to,session_keys):
-        try:
-            self.lock.acquire()
-            for thing in session_keys:
-                    record={thing_to:session_keys[thing]}
-                    if thing in self.pending_keys:
-                        self.pending_keys[thing].update(record)
-                    else:
-                        self.pending_keys[thing]=record
-            logging.info(f"PENDING KEYS 2:\n{self.pending_keys}")                                 
-            self.lock.release()
-        except Exception as ex:
-            logging.error(ex)
-            logging.error(f"Error during add_pendig_key handling")
-    
     def auth_session_keys(self,message,address):
         try:
             session_keys=message['SESSION_KEYS']
@@ -634,7 +612,7 @@ class Auth:
                     self.pending_keys[thing]=record                      
             self.lock.release()
 
-            logging.info(f"PENDING KEYS:\n{self.pending_keys}")
+            logging.info(self.pending_keys)
 
             
                 
@@ -654,8 +632,7 @@ class Auth:
         try:
             if thing in self.pending_keys:
                 self.lock.acquire()
-                ret=self.pending_keys.get(thing)
-                #ret=self.pending_keys.pop(thing)
+                ret=self.pending_keys.pop(thing)
                 self.lock.release()
                 return ret
             else:
@@ -744,8 +721,6 @@ class Auth:
                 deleted=self.registered_entity_table.pop(thing)
                 logging.info(f"Deleted Thing {deleted}")
                 logging.info(self.registered_entity_table)
-                if thing in self.pending_keys:
-                    self.pending_keys.pop(thing)
                 self.avaliable_resorce+=deleted['SEC_REQ']
                 self.lock.release()        
             logging.info(self.auth_status())
