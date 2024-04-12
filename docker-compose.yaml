@@ -31,6 +31,26 @@ services:
       - $PWD/a3/data:/app/data
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
+  a4:
+    container_name: a4
+    hostname: a4
+    network_mode: "host"
+    build: 
+      context: ./a4/
+    volumes:
+      - $PWD/a4/data:/app/data
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro" 
+  a5:
+    container_name: a5
+    hostname: a5
+    network_mode: "host"
+    build: 
+      context: ./a5/
+    volumes:
+      - $PWD/a5/data:/app/data
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"  
   logger:
     container_name: logger
     hostname: logger

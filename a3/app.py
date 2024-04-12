@@ -11,10 +11,14 @@ class Auth:
     trusted_auth_things={}
     pending_keys={}
     lock = threading.Lock()
-
+    session_keys_stat=[0,0] # 0 total
+    register_stat=[0,0]     # 1 accepted
+    migration_plan={}
+    MIGRATION=True
+    TRUST=True
     def __init__(self):
         logging.basicConfig(
-        level=logging.DEBUG,
+        level=logging.INFO,
         filename=f"data/log/{socket.gethostname()}_log.log",
         format='%(asctime)s,%(msecs)d %(levelname)s %(message)s',
         datefmt='%H:%M')
@@ -23,6 +27,7 @@ class Auth:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.socket.bind((self.ip, self.port))
         self.hostname=socket.gethostname()
+        logging.info(self.auth_status())
 
     def load_init_config(self):
         try:
@@ -39,12 +44,35 @@ class Auth:
             self.avaliable_resorce=self.resource
             self.trusted_auth_table=data['trusted_auth_table']
             self.trusted_auth_things=data['trusted_auth_things']
+            with open('data/config/plan.json', 'r') as json_file:
+                data = json.load(json_file)
+            self.migration_plan=self.ingest_plan(data['autoClientList'])
+            logging.info(self.migration_plan)
         except FileNotFoundError:
             logging.error("Config file not found.")
         except json.JSONDecodeError:
             logging.error("Error decoding JSON data. Check if the JSON config file is valid.")
         except Exception as e:
             logging.error("An unexpected error occurred:", e)
+
+    def ingest_plan(self, plan):
+        digested_plan={}
+        with open('data/config/address.json', 'r') as json_file:
+            data = json.load(json_file)
+        for p in plan:
+            thing=p['name']
+            backupTo=p['backupTo']
+            l={}
+            for a in backupTo:
+                auth=f"a{a}"
+                if auth in self.trusted_auth_table and self.TRUST: 
+                    l[auth]=data[auth]
+                elif not self.TRUST:
+                    l[auth]=data[auth]
+            digested_plan[thing]=l
+
+
+        return digested_plan
 
     def get_message_type(self, type):
         if type == 0:
@@ -149,7 +177,7 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during check_security_requiremts handling, with {address}")
 
-    def evaluate_auth_to_suggest(self,accepted):
+    def evaluate_auth_to_suggest(self,accepted,thing):
         '''
         To do
         '''
@@ -161,8 +189,12 @@ class Auth:
 
 
             suggested_auth={}
-            for auth in self.trusted_auth_table:
-                suggested_auth[auth]={'ADDRESS':self.trusted_auth_table[auth]['ADDRESS'],'PORT':self.trusted_auth_table[auth]['PORT']}
+            if not self.MIGRATION:
+                for auth in self.trusted_auth_table:
+                    suggested_auth[auth]={'ADDRESS':self.trusted_auth_table[auth]['ADDRESS'],'PORT':self.trusted_auth_table[auth]['PORT']}
+                    break #just one
+            else:
+                suggested_auth=self.migration_plan[thing]
             
             return suggested_auth
         except Exception as ex:
@@ -182,17 +214,20 @@ class Auth:
                 "A_NONCE": str(os.urandom(2)),
                 "ACCEPTED": accepted,
             }
-            response['SUGGESTED_AUTH']=self.evaluate_auth_to_suggest(accepted)
+            response['SUGGESTED_AUTH']=self.evaluate_auth_to_suggest(accepted,message['THING_ID'])
             if accepted == 1:
                 self.request_accepted+=1
+                self.register_stat[1]+=1
                 session_key=self.add_thing(message)
                 logging.info("Nuova thing aggiunta")
                 response['SESSION_KEY']=session_key
 
             self.total_request+=1
+            self.register_stat[0]+=1
             self.send(message['ADDRESS'],message['PORT'],response)
             if accepted == 1:
                 self.send_auth_update()
+
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during register_response handling, with {address}")  
@@ -354,7 +389,7 @@ class Auth:
                 self.send_register_response(message,address,1)
                 to_delete_from_auth=self.get_auth(message['THING_ID'])
                 if to_delete_from_auth is not None:
-                    self.trusted_auth_things[to_delete_from_auth].remove(message['THINK_ID']) #Elimino dalla lista dei vicini  
+                    self.trusted_auth_things[to_delete_from_auth].remove(message['THING_ID']) #Elimino dalla lista dei vicini  
 
             logging.debug(self.auth_status())
         except Exception as ex:
@@ -462,7 +497,9 @@ class Auth:
                         FORWARD_SESSION_KEYS[thing]=self.gen_key(message['THING_ID'],thing)
             
             self.total_request+=len(message['WHO'])
-            self.request_accepted+=len(SESSION_KEYS)+len(FORWARD_SESSION_KEYS)
+            self.request_accepted+=len(SESSION_KEYS)+len(FORWARD_SESSION_KEYS)+len(TO_STORE)
+            self.session_keys_stat[0]+=len(message['WHO'])
+            self.session_keys_stat[1]+=len(SESSION_KEYS)+len(FORWARD_SESSION_KEYS)+len(TO_STORE)
             return SESSION_KEYS,FORWARD_SESSION_KEYS,TO_STORE
         except Exception as ex:
             logging.error(ex)
@@ -600,6 +637,8 @@ class Auth:
                 self.forward_auth_session_key(forward_session_key,message['THING_ID']) #Inoltro l'eventuale chiave alla trusted auth derivata 
             address=self.get_thing_address(message['THING_ID'])
             self.send(address['ADDRESS'],address['PORT'],session_key_response) #Invio la lista merged alla thinhs
+
+
 
 
 
@@ -750,6 +789,18 @@ class Auth:
                 self.lock.release()        
             logging.info(self.auth_status())
             self.send_auth_update()
+            self.send_logger()
+
+    def send_logger(self):
+        try:
+            record=f"DATA {self.hostname} ---> {self.register_stat}-{self.session_keys_stat}\n"
+            MESSAGE_BYTE=json.dumps(record).encode("UTF-8")
+            sock = socket.socket(socket.AF_INET, 
+                                socket.SOCK_DGRAM) 
+            sock.sendto(MESSAGE_BYTE, (self.ip, 2203))
+        except Exception as ex:
+            logging.error(ex)
+            logging.error(f"Error during send_logger handling")
 
     def start_listening(self):
         logging.debug(f"{self.hostname} Start Listening on {self.ip}:{self.port}")

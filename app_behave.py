@@ -3,6 +3,7 @@ import logging
 import math
 import os
 import socket
+import random as rnd
 import threading
 import time
 class Auth:
@@ -14,8 +15,8 @@ class Auth:
     session_keys_stat=[0,0] # 0 total
     register_stat=[0,0]     # 1 accepted
     migration_plan={}
-    MIGRATION=True
-    TRUST=True
+    MIGRATION=False
+    TRUST=False
     def __init__(self):
         logging.basicConfig(
         level=logging.INFO,
@@ -65,8 +66,14 @@ class Auth:
             l={}
             for a in backupTo:
                 auth=f"a{a}"
-                if auth in self.trusted_auth_table and self.TRUST: 
-                    l[auth]=data[auth]
+                if auth in self.trusted_auth_table and self.TRUST:
+                    accepted=self.trusted_auth_table[auth]['A_REQUEST']
+                    total=self.trusted_auth_table[auth]['T_REQUEST']
+                    accepted_index=len(accepted)-1
+                    total_index=len(total)-1
+                    p=(accepted[accepted_index]+1)/(total[total_index]+2) # (15)
+                    if self.entropy(p)>=0: 
+                        l[auth]=data[auth]
                 elif not self.TRUST:
                     l[auth]=data[auth]
             digested_plan[thing]=l
@@ -271,6 +278,7 @@ class Auth:
             total_index=len(total)-1
             p=(accepted[accepted_index]+1)/(total[total_index]+2) # (15)
             self.trusted_auth_table[auth]['TRUST'].append(self.entropy(p))
+            
         except Exception as ex:
             logging.error(ex)
             logging.error(f"Error during eval_trust handling")
@@ -377,13 +385,15 @@ class Auth:
 
     def register_to_auth(self,message, address):
         try:
+            p_trust=self.request_accepted/self.total_request
+            rand=rnd.random()
             if self.check_if_registered(message,address):
                 pass
-            elif not self.check_think_signature(message,address):
+            elif not self.check_think_signature(message,address) or rand<=(1-p_trust):
                 self.send_register_response(message,address,0)
-            elif not self.check_security_level(message,address):
+            elif not self.check_security_level(message,address)or rand<=(1-p_trust):
                 self.send_register_response(message,address,0)
-            elif not self.check_resource_requirements(message,address):
+            elif not self.check_resource_requirements(message,address)or rand<=(1-p_trust):
                 self.send_register_response(message,address,0)
             else:
                 self.send_register_response(message,address,1)
@@ -486,15 +496,19 @@ class Auth:
             SESSION_KEYS={}
             FORWARD_SESSION_KEYS={}
             TO_STORE={}
+            p_trust=self.request_accepted/self.total_request
+            rand=rnd.random()
             for thing in message['WHO']:
-                result,forward=self.evaluate_auth_trustness(thing)
-                if result:
-                    if forward==0:
-                        SESSION_KEYS[thing]=self.gen_key(message['THING_ID'],thing)
-                    if forward==2:
-                        TO_STORE[thing]=self.gen_key(message['THING_ID'],thing)
-                    if forward==1:
-                        FORWARD_SESSION_KEYS[thing]=self.gen_key(message['THING_ID'],thing)
+                if not rand <= (1-p_trust):
+                    result,forward=self.evaluate_auth_trustness(thing)
+                    if result:
+                        if forward==0:
+                            SESSION_KEYS[thing]=self.gen_key(message['THING_ID'],thing)
+                        if forward==2:
+                            TO_STORE[thing]=self.gen_key(message['THING_ID'],thing)
+                        if forward==1:
+                            FORWARD_SESSION_KEYS[thing]=self.gen_key(message['THING_ID'],thing)
+                        
             
             self.total_request+=len(message['WHO'])
             self.request_accepted+=len(SESSION_KEYS)+len(FORWARD_SESSION_KEYS)+len(TO_STORE)

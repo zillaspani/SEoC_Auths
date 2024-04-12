@@ -2,6 +2,7 @@ import json
 import logging
 import math
 import os
+import random
 import socket
 import threading
 import time
@@ -44,10 +45,10 @@ class Auth:
             self.avaliable_resorce=self.resource
             self.trusted_auth_table=data['trusted_auth_table']
             self.trusted_auth_things=data['trusted_auth_things']
-            with open('data/config/plan.json', 'r') as json_file:
-                data = json.load(json_file)
-            self.migration_plan=self.ingest_plan(data['autoClientList'])
-            logging.info(self.migration_plan)
+            #with open('data/config/plan.json', 'r') as json_file:
+            #    data = json.load(json_file)
+            #self.migration_plan=self.ingest_plan(data['autoClientList'])
+            #logging.info(self.migration_plan)
         except FileNotFoundError:
             logging.error("Config file not found.")
         except json.JSONDecodeError:
@@ -65,11 +66,19 @@ class Auth:
             l={}
             for a in backupTo:
                 auth=f"a{a}"
-                if auth in self.trusted_auth_table and self.TRUST: 
+                if auth in self.trusted_auth_table: 
                     l[auth]=data[auth]
-                elif not self.TRUST:
-                    l[auth]=data[auth]
+                else:
+
+                    for trusted_auth in self.trusted_auth_table:
+                        try:
+                            if auth in self.trusted_auth_table[trusted_auth]['NEIGHBORS'] and self.make_trust(trusted_auth,auth):
+                                l[auth]=data[auth]
+                        except KeyError as ke:
+                            break
+
             digested_plan[thing]=l
+
 
 
         return digested_plan
@@ -802,10 +811,21 @@ class Auth:
             logging.error(ex)
             logging.error(f"Error during send_logger handling")
 
+    def planT(self):
+        with open('data/config/plan.json', 'r') as json_file:
+            data = json.load(json_file)
+        time.sleep(10)
+        self.migration_plan=self.ingest_plan(data['autoClientList'])
+        logging.info(f"MIGR:\n{self.migration_plan}")
+
     def start_listening(self):
         logging.debug(f"{self.hostname} Start Listening on {self.ip}:{self.port}")
         listening_thread = threading.Thread(target=self.listenT, daemon= True)
         listening_thread.start()
+        time.sleep(random.randint(0,2))
+        self.send_auth_update()
+        plan_thread = threading.Thread(target=self.planT, daemon= True)
+        plan_thread.start()
         resource_thread = threading.Thread(target=self.resourceT, daemon= True)
         resource_thread.start()
             

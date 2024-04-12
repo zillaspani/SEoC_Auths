@@ -1,6 +1,6 @@
 #!/bin/bash
 
-lista=("a1" "a2" "a3")
+lista=("a1" "a2" "a3" "a4" "a5")
 
 for elemento in "${lista[@]}"
 do

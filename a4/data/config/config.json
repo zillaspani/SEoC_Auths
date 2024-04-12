@@ -1,7 +1,7 @@
 {
-  "HOSTNAME":"a3",
+  "HOSTNAME":"a4",
   "IP":"192.168.1.100",
-  "UDP_PORT":5003,
+  "UDP_PORT":5004,
   "SEC_LEV":3,
   "RESOURCE":12,
   "REQUEST_ACCEPTED": 50,
@@ -20,9 +20,18 @@
         "TRUST": [],
         "RESOURCE": []
       },
-      "a4":{
+      "a3":{
         "ADDRESS":"192.168.1.100",
-        "PORT": 5004,
+        "PORT": 5003,
+        "SEC_LEV":[],
+        "A_REQUEST":[],
+        "T_REQUEST":[],
+        "TRUST": [],
+        "RESOURCE": []
+      },
+      "a5":{
+        "ADDRESS":"192.168.1.100",
+        "PORT": 5005,
         "SEC_LEV":[],
         "A_REQUEST":[],
         "T_REQUEST":[],
@@ -32,6 +41,7 @@
     },
     "trusted_auth_things":{
       "a2":[],
-      "a4":[]
+      "a3":[],
+      "a5":[]
     }
 }
